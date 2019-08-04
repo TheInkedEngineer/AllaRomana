@@ -11,6 +11,9 @@ class KeyboardView: UIView, SKView {
 
   // MARK: - Properties
 
+  /// The delegate to manage the various events.
+  weak var delegate: KeyboardDelegate?
+
   /// The height of the keyboard.
   static let keyboardHeight = UIScreen.portraitHeight * 0.32383808
 
@@ -111,7 +114,8 @@ extension KeyboardView {
 
 extension KeyboardView: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    // implement logic here
+    guard let numpadKey = self.keys[safe: indexPath.row] else { return }
+    self.delegate?.keyPressed(numpadKey)
   }
 }
 

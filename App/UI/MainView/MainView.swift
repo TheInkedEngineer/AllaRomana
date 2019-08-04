@@ -18,6 +18,7 @@ class MainView: UIView, SKModelledView {
   func configure() {
     self.addSubview(self.billTotalTextField)
     self.billTotalTextField.inputView = KeyboardView.shared
+    (self.billTotalTextField.inputView as? KeyboardView)?.delegate = billTotalTextField
   }
 
   func style() {

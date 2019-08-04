@@ -107,6 +107,11 @@ class KeyboardView: UIView, SKView {
 extension KeyboardView {
   private static func styleKeyboard(_ view: UIView) {
     view.backgroundColor = Palette.black
+    view.layer.masksToBounds = false
+    view.layer.shadowColor = Palette.black.cgColor
+    view.layer.shadowOffset = CGSize(width: 0, height: -2.0)
+    view.layer.shadowRadius = 2.5
+    view.layer.shadowOpacity = 0.5
   }
 }
 

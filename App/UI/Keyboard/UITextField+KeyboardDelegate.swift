@@ -10,14 +10,14 @@ extension UITextField: KeyboardDelegate {
   func keyPressed(_ key: NumpadKey) {
 
     guard
-      let textRange = self.selectedTextRange,
-      let nsRange = self.selectedNSRange else {
+      let selectedTextRange = self.selectedTextRange,
+      let selectedNSRange = self.selectedNSRange else {
         return
     }
 
     // case delete single character
-    if key == .backspace, textRange.start == textRange.end {
-      guard nsRange.location > 0 else { return }
+    if key == .backspace, selectedTextRange.start == selectedTextRange.end {
+      guard selectedNSRange.location > 0 else { return }
       self.text?.removeLast()
       return
     }
@@ -28,7 +28,7 @@ extension UITextField: KeyboardDelegate {
       guard let text = self.text, !text.contains(NumpadKey.decimal.visualValue) else { return }
     }
 
-    self.replace(textRange, withText: key.replacementValue)
+    self.replace(selectedTextRange, withText: key.replacementValue)
   }
 }
 

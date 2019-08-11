@@ -9,9 +9,12 @@ import UIKit
 extension UITextField: KeyboardDelegate {
   func keyPressed(_ key: NumpadKey) {
 
+    let currency = " \(SettingsLogic.currency.rawValue)"
+
     // remove the current currency logo
     if let text = self.text, text.count > 0 {
-      self.text?.removeLast()
+      guard let rangeOfCurrency = text.range(of: currency) else { return }
+      self.text?.removeSubrange(rangeOfCurrency)
     }
 
     guard var selectedTextRange = self.selectedTextRange else {
@@ -38,17 +41,19 @@ extension UITextField: KeyboardDelegate {
       guard let text = self.text, text.isNotEmpty, !text.contains(NumpadKey.decimal.visualValue) else { return }
     }
 
+    // insert actual text
     self.replace(selectedTextRange, withText: key.replacementValue)
 
-    // add currency logo
-    #warning("this should fetch actual currency.")
-    self.text?.append("€")
+    // add currency
+    self.text?.append(currency)
 
     guard let text = self.text else { return }
 
-    self.setCursor(at: text.count - 1)
+    // position cursor properly at the end of the last digit
+    self.setCursor(at: text.count - currency.count)
 
-    if text.count < 2 {
+    // clear text when no numbers are left.
+    if text.count <= currency.count {
       self.text = ""
     }
   }

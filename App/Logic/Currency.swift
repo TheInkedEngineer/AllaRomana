@@ -8,6 +8,7 @@ import Foundation
 
 /// List of all available / supported currencies.
 enum Currency: String {
+  case lebanesePounds = "LBP"
   case euro = "€"
   case usd = "$"
 }

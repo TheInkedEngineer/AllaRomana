@@ -131,8 +131,7 @@ extension MainView {
 
   private static func styleBillTotalTextField(_ textField: UITextField, currency: String) {
     textField.attributedPlaceholder = NSAttributedString(string: "0 \(currency)", attributes: TextStyle.textFieldPlaceholder)
-    textField.textColor = (TextStyle.textFieldText[.foregroundColor] as? UIColor)
-    textField.font = (TextStyle.textFieldText[.font] as? UIFont)
+    textField.defaultTextAttributes = TextStyle.textFieldText
   }
 }
 

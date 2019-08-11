@@ -133,7 +133,7 @@ extension KeyboardView: UICollectionViewDataSource {
       SKFatalError("Could not properly dequeue cell.")
     }
 
-    cell.model = KeypadCellVM(text: self.keys[safe: indexPath.row]?.rawValue, image: nil)
+    cell.model = KeypadCellVM(text: self.keys[safe: indexPath.row]?.visualValue, image: nil)
     return cell
   }
 }

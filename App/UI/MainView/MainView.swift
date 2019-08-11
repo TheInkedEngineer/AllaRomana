@@ -39,6 +39,9 @@ class MainView: UIView, SKModelledView {
   /// Opens the settings button.
   var didTapSettingsButton: Interaction?
 
+  /// The amount inside the `bill total` UITextField changed.
+  var didUpdateBillTotal: ((Int?) -> Void)?
+
   // MARK: - CSLU
   
   func configure() {
@@ -49,7 +52,8 @@ class MainView: UIView, SKModelledView {
     self.billTotalTextField.delegate = self
     self.billTotalTextField.inputView = KeyboardView.shared
     (self.billTotalTextField.inputView as? KeyboardView)?.delegate = billTotalTextField
-
+    
+    self.billTotalTextField.addTarget(self, action: #selector(updatedBillTotal), for: .editingChanged)
     self.resetButton.addTarget(self, action: #selector(tappedResetButton), for: .touchUpInside)
     self.settingsButton.addTarget(self, action: #selector(tappedSettingsButton), for: .touchUpInside)
   }
@@ -101,6 +105,11 @@ class MainView: UIView, SKModelledView {
 
   @objc private func tappedSettingsButton() {
     self.didTapSettingsButton?()
+  }
+
+  @objc private func updatedBillTotal() {
+    guard let text = self.billTotalTextField.text else { return }
+    self.didUpdateBillTotal?(Int(text))
   }
 }
 

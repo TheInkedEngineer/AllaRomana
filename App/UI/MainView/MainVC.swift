@@ -19,5 +19,9 @@ class MainVC: SKViewController<MainView> {
     rootView.didTapSettingsButton = { [weak self] in
       #warning("implement")
     }
+
+    rootView.didUpdateBillTotal = { [weak self] amount in
+      self?.viewModel = MainVM(currentBillAmount: amount)
+    }
   }
 }

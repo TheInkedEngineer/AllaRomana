@@ -10,4 +10,7 @@ struct MainVM: SKViewModel {
 
   /// The current used currency.
   let currency: String = SettingsLogic.currency.rawValue
+
+  /// the currently inserted bill amount.
+  let currentBillAmount: Int?
 }

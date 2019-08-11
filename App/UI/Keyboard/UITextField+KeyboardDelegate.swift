@@ -35,7 +35,7 @@ extension UITextField: KeyboardDelegate {
     // case decimal key.
     if key == .decimal {
       // if decimal already exists, do nothing.
-      guard let text = self.text, !text.contains(NumpadKey.decimal.visualValue) else { return }
+      guard let text = self.text, text.isNotEmpty, !text.contains(NumpadKey.decimal.visualValue) else { return }
     }
 
     self.replace(selectedTextRange, withText: key.replacementValue)

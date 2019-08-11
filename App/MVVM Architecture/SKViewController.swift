@@ -42,7 +42,6 @@ class SKViewController<V: UIView & SKModelledView>: UIViewController {
     v.viewController = self
     v.configure()
     v.style()
-    v.layout()
     self.view = v
   }
 
@@ -53,6 +52,11 @@ class SKViewController<V: UIView & SKModelledView>: UIViewController {
       self.rootView.model = vm
     }
     self.setupInteraction()
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    (self.view as! V).layout()
   }
 
   /// Called everytime the VM needs to be updated.

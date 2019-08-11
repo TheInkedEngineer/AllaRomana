@@ -1,10 +1,10 @@
 PODS:
   - SwiftGen (6.0.0)
-  - SwiftKnife (2.0.1)
+  - SwiftKnife (2.0.2)
 
 DEPENDENCIES:
   - SwiftGen (= 6.0)
-  - SwiftKnife (= 2.0.1)
+  - SwiftKnife (= 2.0.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -13,8 +13,8 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   SwiftGen: cd0bb0c9838c3fc90b78d35b19f492711b19eb55
-  SwiftKnife: 7be9be54700458e590340813761bb650563c8cfe
+  SwiftKnife: d6e6c43b9f1bb24848011d1bca4073cec2103e0e
 
-PODFILE CHECKSUM: 7eda84cb0214975d74775d974fe97fdd924f3643
+PODFILE CHECKSUM: 0ea45f07f89cb414e68415d4cf17924e40bc7e08
 
 COCOAPODS: 1.7.5

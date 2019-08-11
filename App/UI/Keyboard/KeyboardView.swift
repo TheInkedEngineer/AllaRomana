@@ -22,13 +22,8 @@ class KeyboardView: UIView, SKView {
 
   /// A shared instance of the keyboard
   static var shared: KeyboardView {
-    var bottomSafeAreaInsets: CGFloat = 0
-
     #warning("this does not currently work for keywindow is nil")
-    // only newer iPhones have a bottom safe area inset.
-    if #available(iOS 11.0, *) {
-      bottomSafeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
-    }
+    let bottomSafeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
 
     let frame = CGRect(
       x: 0,
@@ -126,6 +121,7 @@ extension KeyboardView: UICollectionViewDelegate {
 
 
 // Mark: - DataSource
+
 extension KeyboardView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return self.keys.count

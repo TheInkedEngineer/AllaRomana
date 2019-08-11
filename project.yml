@@ -6,7 +6,7 @@ options:
   indentWidth: 2
   xcodeVersion: 10.2.1
   deploymentTarget:
-    iOS: "10.0"
+    iOS: "11.0"
     devices: "iPhone"
   generateEmptyDirectories: true
   

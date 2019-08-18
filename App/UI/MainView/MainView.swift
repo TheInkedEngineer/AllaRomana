@@ -29,13 +29,13 @@ class MainView: UIView, SKModelledView {
   let billTotalLabel = UILabel()
 
   /// The textField to insert the bill total.
-  let billTotalTextField = BillTextField()
+  let billTotalTextField = CustomTextField(type: .money)
 
   /// The label for the bill total.
   let tipPercentageLabel = UILabel()
 
   /// The textField to insert the bill total.
-  let tipPercentageTextField = PercentageTextField()
+  let tipPercentageTextField = CustomTextField(type: .tips)
 
   // MARK: - Interactions
 

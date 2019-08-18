@@ -4,9 +4,8 @@
 //  Copyright © 2019 TheInkedEngineer. All rights reserved.
 // 
 
-import UIKit
+extension CustomTextField: KeyboardDelegate {
 
-extension BillTextField: KeyboardDelegate {
   /// Properly formatted currency with spacing.
   private var currency: String {
     return " \(SettingsLogic.currency.rawValue)"
@@ -22,7 +21,7 @@ extension BillTextField: KeyboardDelegate {
 
     guard var selectedTextRange = self.selectedTextRange else { return }
 
-    self.removeCurrency()
+    self.removeSuffix()
 
     // case delete single character
     if key == .backspace, selectedTextRange.start == selectedTextRange.end {
@@ -32,17 +31,17 @@ extension BillTextField: KeyboardDelegate {
         let deleteRange = self.textRange(from: startPosition, to: endPosition)
 
         else {
-        return
+          return
       }
 
       selectedTextRange = deleteRange
     }
 
     self.replace(selectedTextRange, withText: key.replacementValue)
-    self.addCurrency()
+    self.addSuffix()
 
     // position cursor properly at the end of the last digit
-    self.adjustCursorPosition()
+    self.placeCursorAtLastDigit()
 
     // this is done here to get a fresh copy of the text content after various updates.
     guard let updatedText = self.text else { return }
@@ -56,7 +55,28 @@ extension BillTextField: KeyboardDelegate {
 
 // MARK: - Helpers
 
-extension BillTextField {
+extension CustomTextField {
+
+  /// Removes the suffix at the end of the string in order to have only the digits to manipulate.
+  private func removeSuffix() {
+    switch self.textFieldType {
+    case .money:
+      self.removeCurrency()
+    case .tips:
+      self.removePercentage()
+    }
+  }
+
+  /// Adds the suffix at the end of the string in order to have it properly formatted.
+  private func addSuffix() {
+    switch self.textFieldType {
+    case .money:
+      self.addCurrency()
+    case .tips:
+      self.addPercentage()
+    }
+  }
+
   /// Removes the currency from end of string.
   private func removeCurrency() {
     if let text = self.text, text.count > 0 {
@@ -70,21 +90,31 @@ extension BillTextField {
     self.text?.append(self.currency)
   }
 
-  /// Position the curson at the desired position (offset) compared to the start of the document.
-  ///
-  /// - Parameter offset: The desired offset.
-  private func adjustCursorPosition() {
+  /// Adds the percentage symbol to end of string.
+  private func addPercentage() {
+    self.text?.append(" %")
+  }
+
+  /// Removes the percentage symbol from end of string.
+  private func removePercentage() {
+    if let text = self.text, text.count > 0 {
+      guard let rangeOfPercentage = text.range(of: " %") else { return }
+      self.text?.removeSubrange(rangeOfPercentage)
+    }
+  }
+
+  /// Position the curson at the end of the digits string before the currency or percentage suffix.
+  private func placeCursorAtLastDigit() {
     guard let text = self.text else { return }
-    let offset = text.count - self.currency.count
+    let offset: Int
+    switch self.textFieldType {
+    case .money:
+      offset = text.count - self.currency.count
+    case .tips:
+      offset = text.count - 2
+    }
     guard let position = self.position(from: beginningOfDocument, offset: offset) else { return }
     self.selectedTextRange = self.textRange(from: position, to: position)
   }
 }
 
-extension String {
-  /// Checks if the String contains any digit.
-  var containsDigit: Bool {
-    guard !self.isEmpty else { return false }
-    return self.contains { Int(String($0)) != nil }
-  }
-}

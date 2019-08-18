@@ -67,6 +67,15 @@ class MainView: UIView, SKModelledView {
   /// The button to increase the number of payers.
   let increaseNumberOfSharesButton = SKImageButton()
 
+  /// The background of the share per person section.
+  let sharePerPersonSectionBackground = UIView()
+
+  /// The label to use for the sare per person section.
+  let sharePerPersonTitleLabel = UILabel()
+
+  /// The amount to pay per share.
+  let sharePerPersonAmount = UILabel()
+
   // MARK: - Interactions
 
   /// Resets the content of the page.
@@ -100,6 +109,9 @@ class MainView: UIView, SKModelledView {
     self.addSubview(self.decreaseNumberOfSharesButton)
     self.addSubview(self.numberOfSharesLabel)
     self.addSubview(self.increaseNumberOfSharesButton)
+    self.addSubview(self.sharePerPersonSectionBackground)
+    self.addSubview(self.sharePerPersonTitleLabel)
+    self.addSubview(self.sharePerPersonAmount)
 
     self.billTotalTextField.delegate = self
     self.billTotalTextField.inputView = KeyboardView.shared
@@ -126,9 +138,12 @@ class MainView: UIView, SKModelledView {
     MainView.styleTipPercentageSectionTitleLabel(self.tipPercentageSectionTitleLabel)
     MainView.styleSharesSectionTitleLabel(self.sharesSectionTitleLabel)
     MainView.styleIncreaseNumberOfSharesButton(self.increaseNumberOfSharesButton)
+    MainView.styleSharePerPersonSectionBackground(self.sharePerPersonSectionBackground)
   }
 
   func layout() {
+    guard let keyboard = self.billTotalTextField.inputView else { return }
+
     self.resetButton.translatesAutoresizingMaskIntoConstraints = false
     self.resetButton.topAnchor.constraint(equalTo: self.topAnchor, constant: self.safeAreaInsets.top + 20).isActive = true
     self.resetButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
@@ -197,6 +212,41 @@ class MainView: UIView, SKModelledView {
     self.increaseNumberOfSharesButton.widthAnchor.constraint(equalToConstant: Asset.plusButtonEnabled.image.size.width).isActive = true
     self.increaseNumberOfSharesButton.heightAnchor.constraint(equalToConstant: Asset.plusButtonEnabled.image.size.height).isActive = true
     self.increaseNumberOfSharesButton.leadingAnchor.constraint(equalTo: self.numberOfSharesLabel.trailingAnchor, constant: 15).isActive = true
+
+    let spaceBetweenSharesAndKeyboard = UILayoutGuide()
+    self.addLayoutGuide(spaceBetweenSharesAndKeyboard)
+    spaceBetweenSharesAndKeyboard.topAnchor.constraint(equalTo: self.increaseNumberOfSharesButton.bottomAnchor).isActive = true
+    spaceBetweenSharesAndKeyboard.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -keyboard.frame.height).isActive = true
+    spaceBetweenSharesAndKeyboard.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+    spaceBetweenSharesAndKeyboard.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+
+    self.sharePerPersonSectionBackground.translatesAutoresizingMaskIntoConstraints = false
+    self.sharePerPersonSectionBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
+    self.sharePerPersonSectionBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
+    self.sharePerPersonSectionBackground.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.12315271).isActive = true
+    self.sharePerPersonSectionBackground.centerYAnchor.constraint(equalTo: spaceBetweenSharesAndKeyboard.centerYAnchor).isActive = true
+
+    let sharePerPersonInfoContainer = UILayoutGuide()
+    self.addLayoutGuide(sharePerPersonInfoContainer)
+    sharePerPersonInfoContainer.heightAnchor.constraint(
+      // height of both labels plus the vertical distance between them.
+      equalToConstant: self.sharePerPersonTitleLabel.intrinsicContentSize.height + self.sharePerPersonAmount.intrinsicContentSize.height + 10
+    )
+    sharePerPersonInfoContainer.leadingAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.leadingAnchor, constant: 50).isActive = true
+    sharePerPersonInfoContainer.trailingAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.trailingAnchor, constant: -50).isActive = true
+    sharePerPersonInfoContainer.centerYAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.centerYAnchor).isActive = true
+
+    self.sharePerPersonTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.sharePerPersonTitleLabel.leadingAnchor.constraint(equalTo: sharePerPersonInfoContainer.leadingAnchor).isActive = true
+    self.sharePerPersonTitleLabel.trailingAnchor.constraint(equalTo: sharePerPersonInfoContainer.trailingAnchor).isActive = true
+    self.sharePerPersonTitleLabel.topAnchor.constraint(equalTo: sharePerPersonInfoContainer.topAnchor).isActive = true
+    self.sharePerPersonTitleLabel.sizeToFit()
+
+    self.sharePerPersonAmount.translatesAutoresizingMaskIntoConstraints = false
+    self.sharePerPersonAmount.leadingAnchor.constraint(equalTo: sharePerPersonInfoContainer.leadingAnchor).isActive = true
+    self.sharePerPersonAmount.trailingAnchor.constraint(equalTo: sharePerPersonInfoContainer.trailingAnchor).isActive = true
+    self.sharePerPersonAmount.bottomAnchor.constraint(equalTo: sharePerPersonInfoContainer.bottomAnchor).isActive = true
+    self.sharePerPersonAmount.sizeToFit()
   }
 
   func update(oldModel: MainVM?) {
@@ -206,6 +256,8 @@ class MainView: UIView, SKModelledView {
     MainView.styleDecreaseNumberOfSharesButton(self.decreaseNumberOfSharesButton, isEnabled: model.isDecreaseNumberOfSharesButtonEnabled)
     MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.rawValue, shouldReset: model.shouldDeleteBillTotalTextFieldContent)
     MainView.styleTipPercentageTextField(self.tipPercentageTextField, shouldReset: model.shouldDeleteTipPercentageTextFieldContent)
+    MainView.styleSharePerPersonTitleLabel(self.sharePerPersonTitleLabel, with: model.sharePerPersonTitleText)
+    MainView.styleSharePerPersonAmount(self.sharePerPersonAmount, amount: model.sharePerPerson, currency: model.currency)
   }
 
   //MARK: - User Interaction
@@ -257,7 +309,7 @@ extension MainView {
   }
 
   private static func styleBillTotalSectionTitleLabel(_ label: UILabel) {
-    label.attributedText = NSAttributedString(string: "Bill Total", attributes: TextStyle.sectionTitle)
+    label.attributedText = NSAttributedString(string: "Bill Total", attributes: TextStyle.sectionTitleLightBackground)
     label.numberOfLines = 0
     label.adjustsFontSizeToFitWidth = true
     label.minimumScaleFactor = 0.6
@@ -265,14 +317,14 @@ extension MainView {
 
   private static func styleBillTotalTextField(_ textField: UITextField, currency: String, shouldReset: Bool) {
     textField.attributedPlaceholder = NSAttributedString(string: "0 \(currency)", attributes: TextStyle.textFieldPlaceholder)
-    textField.defaultTextAttributes = TextStyle.populatedFieldText
+    textField.defaultTextAttributes = TextStyle.populatedFieldTextLightBackground
     if shouldReset {
       textField.text = nil
     }
   }
 
   private static func styleTipPercentageSectionTitleLabel(_ label: UILabel) {
-    label.attributedText = NSAttributedString(string: "Tip Percentage", attributes: TextStyle.sectionTitle)
+    label.attributedText = NSAttributedString(string: "Tip Percentage", attributes: TextStyle.sectionTitleLightBackground)
     label.numberOfLines = 0
     label.adjustsFontSizeToFitWidth = true
     label.minimumScaleFactor = 0.6
@@ -280,14 +332,14 @@ extension MainView {
 
   private static func styleTipPercentageTextField(_ textField: UITextField, shouldReset: Bool) {
     textField.attributedPlaceholder = NSAttributedString(string: "0 %", attributes: TextStyle.textFieldPlaceholder)
-    textField.defaultTextAttributes = TextStyle.populatedFieldText
+    textField.defaultTextAttributes = TextStyle.populatedFieldTextLightBackground
     if shouldReset {
       textField.text = nil
     }
   }
 
   private static func styleSharesSectionTitleLabel(_ label: UILabel) {
-    label.attributedText = NSAttributedString(string: "Shares", attributes: TextStyle.sectionTitle)
+    label.attributedText = NSAttributedString(string: "Shares", attributes: TextStyle.sectionTitleLightBackground)
     label.numberOfLines = 0
     label.adjustsFontSizeToFitWidth = true
     label.minimumScaleFactor = 0.6
@@ -301,7 +353,7 @@ extension MainView {
   }
 
   private static func styleNumberOfSharesLabel(_ label: UILabel, shares: Int) {
-    label.attributedText = NSAttributedString(string: "\(shares)", attributes: TextStyle.populatedFieldText)
+    label.attributedText = NSAttributedString(string: "\(shares)", attributes: TextStyle.populatedFieldTextLightBackground)
     label.textAlignment = .center
     label.numberOfLines = 1
     label.minimumScaleFactor = 0.2
@@ -311,6 +363,27 @@ extension MainView {
   private static func styleIncreaseNumberOfSharesButton(_ button: SKImageButton) {
     let normalImage = Asset.plusButtonEnabled.image
     button.image = normalImage
+  }
+
+  private static func styleSharePerPersonSectionBackground(_ view: UIView) {
+    view.backgroundColor = Palette.black
+    view.layer.cornerRadius = 10
+  }
+
+  private static func styleSharePerPersonTitleLabel(_ label: UILabel, with content: String) {
+    label.attributedText = NSAttributedString(string: content, attributes: TextStyle.sectionTitleDarkBackground)
+    label.textAlignment = .center
+    label.numberOfLines = 1
+    label.minimumScaleFactor = 0.2
+    label.adjustsFontSizeToFitWidth = true
+  }
+
+  private static func styleSharePerPersonAmount(_ label: UILabel, amount: Double, currency: String) {
+    label.attributedText = NSAttributedString(string: "\(amount) \(currency)", attributes: TextStyle.populatedFieldTextDarkBackground)
+    label.textAlignment = .center
+    label.numberOfLines = 1
+    label.minimumScaleFactor = 0.2
+    label.adjustsFontSizeToFitWidth = true
   }
 }
 

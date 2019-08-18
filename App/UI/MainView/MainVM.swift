@@ -20,7 +20,7 @@ struct MainVM: SKViewModel {
   let numberOfShares: Int
 
   /// the total amout to pay per person.
-  let totalAmountToPayPerPerson: Double
+  let sharePerPerson: Double
 
   /// Whether or not the `decreaseNumberOfSharesButton` is enabled.
   var isDecreaseNumberOfSharesButtonEnabled: Bool {
@@ -37,5 +37,10 @@ struct MainVM: SKViewModel {
   /// Returns true when the `currentTipPercentage` is `nil`.
   var shouldDeleteTipPercentageTextFieldContent: Bool {
     return self.currentTipPercentage == nil
+  }
+
+  /// The text to display as the title for the share per person section.
+  var sharePerPersonTitleText: String {
+    return self.numberOfShares == 1 ? "You should pay" : "Each person should pay"
   }
 }

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       currentBillAmount: nil,
       currentTipPercentage: nil,
       numberOfShares: 1,
-      totalAmountToPayPerPerson: 0
+      sharePerPerson: 0
     )
     vc.viewModel = vm
     self.window?.rootViewController = vc

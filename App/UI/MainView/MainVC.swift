@@ -17,7 +17,7 @@ class MainVC: SKViewController<MainView> {
         currentBillAmount: nil,
         currentTipPercentage: nil,
         numberOfShares: 1,
-        totalAmountToPayPerPerson: 0
+        sharePerPerson: 0
       )
       self?.rootView.billTotalTextField.becomeFirstResponder()
     }
@@ -29,7 +29,7 @@ class MainVC: SKViewController<MainView> {
     self.rootView.didTapDecreaseSharesButton = { [weak self] in
       guard let model = self?.viewModel else { return }
 
-      let amountToPayPerPerson = MainViewLogic.calculateShare(
+      let sharePerPerson = MainViewLogic.calculateShare(
         bill: model.currentBillAmount ?? 0,
         tip: model.currentTipPercentage ?? 0,
         persons: model.numberOfShares - 1
@@ -39,14 +39,14 @@ class MainVC: SKViewController<MainView> {
         currentBillAmount: model.currentBillAmount,
         currentTipPercentage: model.currentTipPercentage,
         numberOfShares: model.numberOfShares - 1,
-        totalAmountToPayPerPerson: amountToPayPerPerson
+        sharePerPerson: sharePerPerson
       )
     }
 
     self.rootView.didTapIncreaseSharesButton = { [weak self] in
       guard let model = self?.viewModel else { return }
 
-      let amountToPayPerPerson = MainViewLogic.calculateShare(
+      let sharePerPerson = MainViewLogic.calculateShare(
         bill: model.currentBillAmount ?? 0,
         tip: model.currentTipPercentage ?? 0,
         persons: model.numberOfShares + 1
@@ -56,14 +56,14 @@ class MainVC: SKViewController<MainView> {
         currentBillAmount: model.currentBillAmount,
         currentTipPercentage: model.currentTipPercentage,
         numberOfShares: model.numberOfShares + 1,
-        totalAmountToPayPerPerson: amountToPayPerPerson
+        sharePerPerson: sharePerPerson
       )
     }
 
     self.rootView.didUpdateBillTotal = { [weak self] amount in
       guard let model = self?.viewModel else { return }
 
-      let amountToPayPerPerson = MainViewLogic.calculateShare(
+      let sharePerPerson = MainViewLogic.calculateShare(
         bill: amount ?? 0,
         tip: model.currentTipPercentage ?? 0,
         persons: model.numberOfShares
@@ -73,14 +73,14 @@ class MainVC: SKViewController<MainView> {
         currentBillAmount: amount,
         currentTipPercentage: model.currentTipPercentage,
         numberOfShares: model.numberOfShares,
-        totalAmountToPayPerPerson: amountToPayPerPerson
+        sharePerPerson: sharePerPerson
       )
     }
 
     self.rootView.didUpdateTipPercentage = { [weak self] amount in
       guard let model = self?.viewModel else { return }
 
-      let amountToPayPerPerson = MainViewLogic.calculateShare(
+      let sharePerPerson = MainViewLogic.calculateShare(
         bill: model.currentBillAmount ?? 0,
         tip: amount ?? 0,
         persons: model.numberOfShares
@@ -90,7 +90,7 @@ class MainVC: SKViewController<MainView> {
         currentBillAmount: model.currentBillAmount,
         currentTipPercentage: amount,
         numberOfShares: model.numberOfShares,
-        totalAmountToPayPerPerson: amountToPayPerPerson
+        sharePerPerson: sharePerPerson
       )
     }
   }

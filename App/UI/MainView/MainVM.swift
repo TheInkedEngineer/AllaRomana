@@ -7,7 +7,6 @@
 import Foundation
 
 struct MainVM: SKViewModel {
-
   /// The current used currency.
   let currency: String = SettingsLogic.currency.rawValue
 

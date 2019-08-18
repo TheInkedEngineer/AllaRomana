@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     self.window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
     let vc = MainVC()
-    let vm = MainVM()
+    let vm = MainVM(currentBillAmount: nil)
     vc.viewModel = vm
     self.window?.rootViewController = vc
     self.window?.makeKeyAndVisible()

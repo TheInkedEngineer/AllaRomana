@@ -17,6 +17,21 @@ class MainView: UIView, SKModelledView {
   /// The desired left margin of the overall view.
   static let leftMargin: CGFloat = 20
 
+  /// The distance present between two different sections.
+  static var distanceBetweenSections: CGFloat {
+    // case iphone SE
+    if UIScreen.portraitHeight <= 568 {
+      return 15
+    }
+
+    // case iPhone 6, 7, 8
+    if UIScreen.portraitHeight <= 667 {
+      return 25
+    }
+
+    return 30
+  }
+
   /// The distance between a section title and its first child.
   static let distanceFromSectionTitle: CGFloat = 10
 
@@ -128,7 +143,7 @@ class MainView: UIView, SKModelledView {
 
     self.billTotalSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     self.billTotalSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.billTotalSectionTitleLabel.topAnchor.constraint(equalTo: self.settingsButton.bottomAnchor, constant: 30).isActive = true
+    self.billTotalSectionTitleLabel.topAnchor.constraint(equalTo: self.settingsButton.bottomAnchor, constant: MainView.distanceBetweenSections).isActive = true
     self.billTotalSectionTitleLabel.sizeToFit()
 
     self.billTotalTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -139,7 +154,7 @@ class MainView: UIView, SKModelledView {
 
     self.tipPercentageSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     self.tipPercentageSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.tipPercentageSectionTitleLabel.topAnchor.constraint(equalTo: self.billTotalTextField.bottomAnchor, constant: 30).isActive = true
+    self.tipPercentageSectionTitleLabel.topAnchor.constraint(equalTo: self.billTotalTextField.bottomAnchor, constant: MainView.distanceBetweenSections).isActive = true
     self.tipPercentageSectionTitleLabel.sizeToFit()
 
     self.tipPercentageTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -153,7 +168,7 @@ class MainView: UIView, SKModelledView {
 
     self.sharesSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     self.sharesSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.sharesSectionTitleLabel.topAnchor.constraint(equalTo: self.tipPercentageTextField.bottomAnchor, constant: 30).isActive = true
+    self.sharesSectionTitleLabel.topAnchor.constraint(equalTo: self.tipPercentageTextField.bottomAnchor, constant: MainView.distanceBetweenSections).isActive = true
     self.sharesSectionTitleLabel.sizeToFit()
 
     self.numberOfSharesLabel.translatesAutoresizingMaskIntoConstraints = false

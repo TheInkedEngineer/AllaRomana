@@ -84,9 +84,7 @@ class KeyboardView: UIView, SKView {
     KeyboardView.styleKeyboard(self)
   }
 
-  func update() {
-
-  }
+  func update() {}
 
   func layout() {
     self.keypadCollection.translatesAutoresizingMaskIntoConstraints = false

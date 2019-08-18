@@ -108,9 +108,7 @@ class MainView: UIView, SKModelledView {
     MainView.styleSettingsIcon(self.settingsButton)
     MainView.styleResetIcon(self.resetButton)
     MainView.styleBillTotalSectionTitleLabel(self.billTotalSectionTitleLabel)
-    MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.rawValue)
     MainView.styleTipPercentageSectionTitleLabel(self.tipPercentageSectionTitleLabel)
-    MainView.styleTipPercentageTextField(self.tipPercentageTextField)
     MainView.styleSharesSectionTitleLabel(self.sharesSectionTitleLabel)
     MainView.styleIncreaseNumberOfSharesButton(self.increaseNumberOfSharesButton)
   }
@@ -189,9 +187,10 @@ class MainView: UIView, SKModelledView {
   func update(oldModel: MainVM?) {
     guard let model = self.model else { SKFatalError("Expecting a viewmodel.") }
 
-    MainView.styleBillTotalTextField(self.billTotalTextField, currency: model.currency)
     MainView.styleNumberOfSharesLabel(self.numberOfSharesLabel, shares: model.numberOfShares)
     MainView.styleDecreaseNumberOfSharesButton(self.decreaseNumberOfSharesButton, isEnabled: model.isDecreaseNumberOfSharesButtonEnabled)
+    MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.rawValue, shouldReset: model.shouldDeleteBillTotalTextFieldContent)
+    MainView.styleTipPercentageTextField(self.tipPercentageTextField, shouldReset: model.shouldDeleteTipPercentageTextFieldContent)
   }
 
   //MARK: - User Interaction
@@ -249,9 +248,12 @@ extension MainView {
     label.minimumScaleFactor = 0.6
   }
 
-  private static func styleBillTotalTextField(_ textField: UITextField, currency: String) {
+  private static func styleBillTotalTextField(_ textField: UITextField, currency: String, shouldReset: Bool) {
     textField.attributedPlaceholder = NSAttributedString(string: "0 \(currency)", attributes: TextStyle.textFieldPlaceholder)
     textField.defaultTextAttributes = TextStyle.populatedFieldText
+    if shouldReset {
+      textField.text = nil
+    }
   }
 
   private static func styleTipPercentageSectionTitleLabel(_ label: UILabel) {
@@ -261,9 +263,12 @@ extension MainView {
     label.minimumScaleFactor = 0.6
   }
 
-  private static func styleTipPercentageTextField(_ textField: UITextField) {
+  private static func styleTipPercentageTextField(_ textField: UITextField, shouldReset: Bool) {
     textField.attributedPlaceholder = NSAttributedString(string: "0 %", attributes: TextStyle.textFieldPlaceholder)
     textField.defaultTextAttributes = TextStyle.populatedFieldText
+    if shouldReset {
+      textField.text = nil
+    }
   }
 
   private static func styleSharesSectionTitleLabel(_ label: UILabel) {

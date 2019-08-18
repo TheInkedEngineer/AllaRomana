@@ -26,4 +26,16 @@ struct MainVM: SKViewModel {
   var isDecreaseNumberOfSharesButtonEnabled: Bool {
     return self.numberOfShares > 1
   }
+
+  /// Whether or not to delete the content of the textfield.
+  /// Returns true when the `currentBillAmount` is `nil`.
+  var shouldDeleteBillTotalTextFieldContent: Bool {
+    return self.currentBillAmount == nil
+  }
+
+  /// Whether or not to delete the content of the textfield.
+  /// Returns true when the `currentTipPercentage` is `nil`.
+  var shouldDeleteTipPercentageTextFieldContent: Bool {
+    return self.currentTipPercentage == nil
+  }
 }

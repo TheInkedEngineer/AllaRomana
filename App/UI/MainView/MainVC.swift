@@ -19,6 +19,7 @@ class MainVC: SKViewController<MainView> {
         numberOfShares: 1,
         totalAmountToPayPerPerson: 0
       )
+      self?.rootView.billTotalTextField.becomeFirstResponder()
     }
 
     self.rootView.didTapSettingsButton = { [weak self] in
@@ -86,8 +87,8 @@ class MainVC: SKViewController<MainView> {
       )
 
       self?.viewModel = MainVM(
-        currentBillAmount: amount,
-        currentTipPercentage: model.currentTipPercentage,
+        currentBillAmount: model.currentBillAmount,
+        currentTipPercentage: amount,
         numberOfShares: model.numberOfShares,
         totalAmountToPayPerPerson: amountToPayPerPerson
       )

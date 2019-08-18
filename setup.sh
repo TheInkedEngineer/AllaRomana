@@ -18,8 +18,10 @@ fi
 # remove present .xcodeproj
 rm -rf AllaRomana.xcodeproj
 rm -rf AllaRomana.xcworkspace
+
 # run xcodegen to generate new file
 xcodegen
+
 # move config files to right place
 cp Configurations/IDETemplateMacros.plist AllaRomana.xcodeproj/xcshareddata/IDETemplateMacros.plist
 

@@ -22,7 +22,7 @@ enum TextStyle {
     ]
   }
 
-  static var textFieldText: [NSAttributedString.Key: Any] {
+  static var populatedFieldText: [NSAttributedString.Key: Any] {
     return [
       .foregroundColor: Palette.black,
       .font: UIFont.systemFont(ofSize: 24, weight: .bold)

@@ -17,6 +17,9 @@ class MainView: UIView, SKModelledView {
   /// The desired left margin of the overall view.
   static let leftMargin: CGFloat = 20
 
+  /// The distance between a section title and its first child.
+  static let distanceFromSectionTitle: CGFloat = 10
+
   // MARK: - UI Elements
 
   /// The reset content icon.
@@ -26,16 +29,28 @@ class MainView: UIView, SKModelledView {
   let settingsButton = SKImageButton()
 
   /// The label for the bill total.
-  let billTotalLabel = UILabel()
+  let billTotalSectionTitleLabel = UILabel()
 
   /// The textField to insert the bill total.
   let billTotalTextField = CustomTextField(type: .money)
 
   /// The label for the bill total.
-  let tipPercentageLabel = UILabel()
+  let tipPercentageSectionTitleLabel = UILabel()
 
   /// The textField to insert the bill total.
   let tipPercentageTextField = CustomTextField(type: .tips)
+
+  /// The label of the shares section.
+  let sharesSectionTitleLabel = UILabel()
+
+  /// The button to decrease the number of payers.
+  let decreaseNumberOfSharesButton = SKImageButton()
+
+  /// The label for the number of payers.
+  let numberOfSharesLabel = UILabel()
+
+  /// The button to increase the number of payers.
+  let increaseNumberOfSharesButton = SKImageButton()
 
   // MARK: - Interactions
 
@@ -46,25 +61,36 @@ class MainView: UIView, SKModelledView {
   var didTapSettingsButton: Interaction?
 
   /// The amount inside the `bill total` UITextField changed.
-  var didUpdateBillTotal: ((Int?) -> Void)?
+  var didUpdateBillTotal: ((Double?) -> Void)?
 
   /// The amount inside the `percentage` UITextField changed.
-  var didUpdateTipPercentage: ((Int?) -> Void)?
+  var didUpdateTipPercentage: ((Double?) -> Void)?
+
+  /// Decreases the amount of shares.
+  var didTapDecreaseSharesButton: Interaction?
+
+  /// Increases the amount of shares.
+  var didTapIncreaseSharesButton: Interaction?
 
   // MARK: - CSLU
   
   func configure() {
     self.addSubview(self.resetButton)
     self.addSubview(self.settingsButton)
-    self.addSubview(self.billTotalLabel)
+    self.addSubview(self.billTotalSectionTitleLabel)
     self.addSubview(self.billTotalTextField)
-    self.addSubview(self.tipPercentageLabel)
+    self.addSubview(self.tipPercentageSectionTitleLabel)
     self.addSubview(self.tipPercentageTextField)
+    self.addSubview(self.sharesSectionTitleLabel)
+    self.addSubview(self.decreaseNumberOfSharesButton)
+    self.addSubview(self.numberOfSharesLabel)
+    self.addSubview(self.increaseNumberOfSharesButton)
 
     self.billTotalTextField.delegate = self
     self.billTotalTextField.inputView = KeyboardView.shared
     (self.billTotalTextField.inputView as? KeyboardView)?.delegate = self.billTotalTextField
     self.billTotalTextField.addTarget(self, action: #selector(self.updatedBillTotal), for: .editingChanged)
+    self.billTotalTextField.becomeFirstResponder()
 
     self.tipPercentageTextField.delegate = self
     self.tipPercentageTextField.inputView = KeyboardView.shared
@@ -73,16 +99,20 @@ class MainView: UIView, SKModelledView {
 
     self.resetButton.addTarget(self, action: #selector(tappedResetButton), for: .touchUpInside)
     self.settingsButton.addTarget(self, action: #selector(tappedSettingsButton), for: .touchUpInside)
+    self.decreaseNumberOfSharesButton.addTarget(self, action: #selector(tappedDecreaseSharesButton), for: .touchUpInside)
+    self.increaseNumberOfSharesButton.addTarget(self, action: #selector(tappedIncreaseSharesButton), for: .touchUpInside)
   }
 
   func style() {
     MainView.styleMainView(self)
     MainView.styleSettingsIcon(self.settingsButton)
     MainView.styleResetIcon(self.resetButton)
-    MainView.styleBillTotalLabel(self.billTotalLabel)
+    MainView.styleBillTotalSectionTitleLabel(self.billTotalSectionTitleLabel)
     MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.rawValue)
-    MainView.styleTipPercentageLabel(self.tipPercentageLabel)
+    MainView.styleTipPercentageSectionTitleLabel(self.tipPercentageSectionTitleLabel)
     MainView.styleTipPercentageTextField(self.tipPercentageTextField)
+    MainView.styleSharesSectionTitleLabel(self.sharesSectionTitleLabel)
+    MainView.styleIncreaseNumberOfSharesButton(self.increaseNumberOfSharesButton)
   }
 
   func layout() {
@@ -98,33 +128,70 @@ class MainView: UIView, SKModelledView {
     self.settingsButton.widthAnchor.constraint(equalToConstant: Asset.settingsWheel.image.size.width).isActive = true
     self.settingsButton.heightAnchor.constraint(equalToConstant: Asset.settingsWheel.image.size.height).isActive = true
 
-    self.billTotalLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.billTotalLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.billTotalLabel.topAnchor.constraint(equalTo: self.settingsButton.bottomAnchor, constant: 30).isActive = true
-    self.billTotalLabel.sizeToFit()
+    self.billTotalSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.billTotalSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
+    self.billTotalSectionTitleLabel.topAnchor.constraint(equalTo: self.settingsButton.bottomAnchor, constant: 30).isActive = true
+    self.billTotalSectionTitleLabel.sizeToFit()
 
     self.billTotalTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.billTotalTextField.leadingAnchor.constraint(equalTo: self.billTotalLabel.leadingAnchor).isActive = true
+    self.billTotalTextField.leadingAnchor.constraint(equalTo: self.billTotalSectionTitleLabel.leadingAnchor).isActive = true
     self.billTotalTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
-    self.billTotalTextField.topAnchor.constraint(equalTo: self.billTotalLabel.bottomAnchor, constant: 10).isActive = true
+    self.billTotalTextField.topAnchor.constraint(equalTo: self.billTotalSectionTitleLabel.bottomAnchor, constant: MainView.distanceFromSectionTitle).isActive = true
     self.billTotalTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
-    self.tipPercentageLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.tipPercentageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.tipPercentageLabel.topAnchor.constraint(equalTo: self.billTotalTextField.bottomAnchor, constant: 30).isActive = true
-    self.tipPercentageLabel.sizeToFit()
+    self.tipPercentageSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.tipPercentageSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
+    self.tipPercentageSectionTitleLabel.topAnchor.constraint(equalTo: self.billTotalTextField.bottomAnchor, constant: 30).isActive = true
+    self.tipPercentageSectionTitleLabel.sizeToFit()
 
     self.tipPercentageTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.tipPercentageTextField.leadingAnchor.constraint(equalTo: self.tipPercentageLabel.leadingAnchor).isActive = true
+    self.tipPercentageTextField.leadingAnchor.constraint(equalTo: self.tipPercentageSectionTitleLabel.leadingAnchor).isActive = true
     self.tipPercentageTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
-    self.tipPercentageTextField.topAnchor.constraint(equalTo: self.tipPercentageLabel.bottomAnchor, constant: 10).isActive = true
+    self.tipPercentageTextField.topAnchor.constraint(
+      equalTo: self.tipPercentageSectionTitleLabel.bottomAnchor,
+      constant: MainView.distanceFromSectionTitle
+      ).isActive = true
     self.tipPercentageTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+
+    self.sharesSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.sharesSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
+    self.sharesSectionTitleLabel.topAnchor.constraint(equalTo: self.tipPercentageTextField.bottomAnchor, constant: 30).isActive = true
+    self.sharesSectionTitleLabel.sizeToFit()
+
+    self.numberOfSharesLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.numberOfSharesLabel.topAnchor.constraint(
+      equalTo: self.sharesSectionTitleLabel.bottomAnchor,
+      constant: MainView.distanceFromSectionTitle
+      ).isActive = true
+    self.numberOfSharesLabel.leadingAnchor.constraint(
+      equalTo: self.leadingAnchor,
+      constant: MainView.leftMargin + Asset.minusButtonEnabled.image.size.width + 15 // left margin + image size + distance from image
+      ).isActive = true
+    self.numberOfSharesLabel.heightAnchor.constraint(equalToConstant: self.numberOfSharesLabel.intrinsicContentSize.height).isActive = true
+    // a fixed with was assigned to avoid having the increase button change position.
+    // number 8 is the largest number in size with the apps font.
+    // 50 for width is enough to fit 888, plus a scale refactor of 0.2 was assigned to the label to adjust the size.
+    self.numberOfSharesLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
+
+    self.decreaseNumberOfSharesButton.translatesAutoresizingMaskIntoConstraints = false
+    self.decreaseNumberOfSharesButton.centerYAnchor.constraint(equalTo: self.numberOfSharesLabel.centerYAnchor).isActive = true
+    self.decreaseNumberOfSharesButton.widthAnchor.constraint(equalToConstant: Asset.minusButtonEnabled.image.size.width).isActive = true
+    self.decreaseNumberOfSharesButton.heightAnchor.constraint(equalToConstant: Asset.minusButtonEnabled.image.size.height).isActive = true
+    self.decreaseNumberOfSharesButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
+
+    self.increaseNumberOfSharesButton.translatesAutoresizingMaskIntoConstraints = false
+    self.increaseNumberOfSharesButton.centerYAnchor.constraint(equalTo: self.numberOfSharesLabel.centerYAnchor).isActive = true
+    self.increaseNumberOfSharesButton.widthAnchor.constraint(equalToConstant: Asset.plusButtonEnabled.image.size.width).isActive = true
+    self.increaseNumberOfSharesButton.heightAnchor.constraint(equalToConstant: Asset.plusButtonEnabled.image.size.height).isActive = true
+    self.increaseNumberOfSharesButton.leadingAnchor.constraint(equalTo: self.numberOfSharesLabel.trailingAnchor, constant: 15).isActive = true
   }
 
   func update(oldModel: MainVM?) {
     guard let model = self.model else { SKFatalError("Expecting a viewmodel.") }
 
     MainView.styleBillTotalTextField(self.billTotalTextField, currency: model.currency)
+    MainView.styleNumberOfSharesLabel(self.numberOfSharesLabel, shares: model.numberOfShares)
+    MainView.styleDecreaseNumberOfSharesButton(self.decreaseNumberOfSharesButton, isEnabled: model.isDecreaseNumberOfSharesButtonEnabled)
   }
 
   //MARK: - User Interaction
@@ -137,14 +204,22 @@ class MainView: UIView, SKModelledView {
     self.didTapSettingsButton?()
   }
 
+  @objc private func tappedDecreaseSharesButton() {
+    self.didTapDecreaseSharesButton?()
+  }
+
+  @objc private func tappedIncreaseSharesButton() {
+    self.didTapIncreaseSharesButton?()
+  }
+
   @objc private func updatedBillTotal() {
     guard let text = self.billTotalTextField.text else { return }
-    self.didUpdateBillTotal?(Int(text))
+    self.didUpdateBillTotal?(Double(text))
   }
 
   @objc private func updatedTipPercentage() {
     guard let text = self.tipPercentageTextField.text else { return }
-    self.didUpdateTipPercentage?(Int(text))
+    self.didUpdateTipPercentage?(Double(text))
   }
 }
 
@@ -167,26 +242,55 @@ extension MainView {
     button.tintColor = Palette.darkGrey
   }
 
-  private static func styleBillTotalLabel(_ label: UILabel) {
+  private static func styleBillTotalSectionTitleLabel(_ label: UILabel) {
     label.attributedText = NSAttributedString(string: "Bill Total", attributes: TextStyle.sectionTitle)
     label.numberOfLines = 0
+    label.adjustsFontSizeToFitWidth = true
     label.minimumScaleFactor = 0.6
   }
 
   private static func styleBillTotalTextField(_ textField: UITextField, currency: String) {
     textField.attributedPlaceholder = NSAttributedString(string: "0 \(currency)", attributes: TextStyle.textFieldPlaceholder)
-    textField.defaultTextAttributes = TextStyle.textFieldText
+    textField.defaultTextAttributes = TextStyle.populatedFieldText
   }
 
-  private static func styleTipPercentageLabel(_ label: UILabel) {
+  private static func styleTipPercentageSectionTitleLabel(_ label: UILabel) {
     label.attributedText = NSAttributedString(string: "Tip Percentage", attributes: TextStyle.sectionTitle)
     label.numberOfLines = 0
+    label.adjustsFontSizeToFitWidth = true
     label.minimumScaleFactor = 0.6
   }
 
   private static func styleTipPercentageTextField(_ textField: UITextField) {
     textField.attributedPlaceholder = NSAttributedString(string: "0 %", attributes: TextStyle.textFieldPlaceholder)
-    textField.defaultTextAttributes = TextStyle.textFieldText
+    textField.defaultTextAttributes = TextStyle.populatedFieldText
+  }
+
+  private static func styleSharesSectionTitleLabel(_ label: UILabel) {
+    label.attributedText = NSAttributedString(string: "Shares", attributes: TextStyle.sectionTitle)
+    label.numberOfLines = 0
+    label.adjustsFontSizeToFitWidth = true
+    label.minimumScaleFactor = 0.6
+  }
+
+  private static func styleDecreaseNumberOfSharesButton(_ button: SKImageButton, isEnabled: Bool) {
+    let normalImage = Asset.minusButtonEnabled.image
+    let disabledImage = Asset.minusButtonDisabled.image
+    button.isEnabled = isEnabled
+    button.image = isEnabled ? normalImage : disabledImage
+  }
+
+  private static func styleNumberOfSharesLabel(_ label: UILabel, shares: Int) {
+    label.attributedText = NSAttributedString(string: "\(shares)", attributes: TextStyle.populatedFieldText)
+    label.textAlignment = .center
+    label.numberOfLines = 1
+    label.minimumScaleFactor = 0.2
+    label.adjustsFontSizeToFitWidth = true
+  }
+
+  private static func styleIncreaseNumberOfSharesButton(_ button: SKImageButton) {
+    let normalImage = Asset.plusButtonEnabled.image
+    button.image = normalImage
   }
 }
 

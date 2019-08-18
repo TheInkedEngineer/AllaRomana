@@ -1,10 +1,8 @@
 //
-//  AppDelegate.swift
 //  AllaRomana
 //
-//  Created by Firas Safa on 27/07/2019.
-//  Copyright © 2019 theinkedengineer. All rights reserved.
-//
+//  Copyright © 2019 TheInkedEngineer. All rights reserved.
+// 
 
 import UIKit
 
@@ -20,7 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     self.window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
     let vc = MainVC()
-    let vm = MainVM(currentBillAmount: nil)
+    let vm = MainVM(
+      currentBillAmount: nil,
+      currentTipPercentage: nil,
+      numberOfShares: 1,
+      totalAmountToPayPerPerson: 0
+    )
     vc.viewModel = vm
     self.window?.rootViewController = vc
     self.window?.makeKeyAndVisible()

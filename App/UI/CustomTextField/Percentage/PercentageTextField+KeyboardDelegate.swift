@@ -7,11 +7,6 @@
 import UIKit
 
 extension PercentageTextField: KeyboardDelegate {
-  /// Properly formatted currency with spacing.
-  private var currency: String {
-    return " \(SettingsLogic.currency.rawValue)"
-  }
-
   func keyPressed(_ key: NumpadKey) {
     
     // case decimal key.

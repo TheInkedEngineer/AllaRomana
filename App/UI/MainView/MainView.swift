@@ -32,7 +32,7 @@ class MainView: UIView, SKModelledView {
   let billTotalTextField = BillTextField()
 
   /// The label for the bill total.
-  let tipPercentageLabel = UITextField()
+  let tipPercentageLabel = UILabel()
 
   /// The textField to insert the bill total.
   let tipPercentageTextField = PercentageTextField()
@@ -48,6 +48,9 @@ class MainView: UIView, SKModelledView {
   /// The amount inside the `bill total` UITextField changed.
   var didUpdateBillTotal: ((Int?) -> Void)?
 
+  /// The amount inside the `percentage` UITextField changed.
+  var didUpdateTipPercentage: ((Int?) -> Void)?
+
   // MARK: - CSLU
   
   func configure() {
@@ -55,21 +58,31 @@ class MainView: UIView, SKModelledView {
     self.addSubview(self.settingsButton)
     self.addSubview(self.billTotalLabel)
     self.addSubview(self.billTotalTextField)
+    self.addSubview(self.tipPercentageLabel)
+    self.addSubview(self.tipPercentageTextField)
+
     self.billTotalTextField.delegate = self
     self.billTotalTextField.inputView = KeyboardView.shared
-    (self.billTotalTextField.inputView as? KeyboardView)?.delegate = billTotalTextField
-    
-    self.billTotalTextField.addTarget(self, action: #selector(updatedBillTotal), for: .editingChanged)
+    (self.billTotalTextField.inputView as? KeyboardView)?.delegate = self.billTotalTextField
+    self.billTotalTextField.addTarget(self, action: #selector(self.updatedBillTotal), for: .editingChanged)
+
+    self.tipPercentageTextField.delegate = self
+    self.tipPercentageTextField.inputView = KeyboardView.shared
+    (self.tipPercentageTextField.inputView as? KeyboardView)?.delegate = self.tipPercentageTextField
+    self.tipPercentageTextField.addTarget(self, action: #selector(self.updatedTipPercentage), for: .editingChanged)
+
     self.resetButton.addTarget(self, action: #selector(tappedResetButton), for: .touchUpInside)
     self.settingsButton.addTarget(self, action: #selector(tappedSettingsButton), for: .touchUpInside)
   }
 
   func style() {
     MainView.styleMainView(self)
-    MainView.styleBillTotalLabel(self.billTotalLabel)
-    MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.rawValue)
     MainView.styleSettingsIcon(self.settingsButton)
     MainView.styleResetIcon(self.resetButton)
+    MainView.styleBillTotalLabel(self.billTotalLabel)
+    MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.rawValue)
+    MainView.styleTipPercentageLabel(self.tipPercentageLabel)
+    MainView.styleTipPercentageTextField(self.tipPercentageTextField)
   }
 
   func layout() {
@@ -95,6 +108,17 @@ class MainView: UIView, SKModelledView {
     self.billTotalTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
     self.billTotalTextField.topAnchor.constraint(equalTo: self.billTotalLabel.bottomAnchor, constant: 10).isActive = true
     self.billTotalTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+
+    self.tipPercentageLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.tipPercentageLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
+    self.tipPercentageLabel.topAnchor.constraint(equalTo: self.billTotalTextField.bottomAnchor, constant: 30).isActive = true
+    self.tipPercentageLabel.sizeToFit()
+
+    self.tipPercentageTextField.translatesAutoresizingMaskIntoConstraints = false
+    self.tipPercentageTextField.leadingAnchor.constraint(equalTo: self.tipPercentageLabel.leadingAnchor).isActive = true
+    self.tipPercentageTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
+    self.tipPercentageTextField.topAnchor.constraint(equalTo: self.tipPercentageLabel.bottomAnchor, constant: 10).isActive = true
+    self.tipPercentageTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
   }
 
   func update(oldModel: MainVM?) {
@@ -116,6 +140,11 @@ class MainView: UIView, SKModelledView {
   @objc private func updatedBillTotal() {
     guard let text = self.billTotalTextField.text else { return }
     self.didUpdateBillTotal?(Int(text))
+  }
+
+  @objc private func updatedTipPercentage() {
+    guard let text = self.tipPercentageTextField.text else { return }
+    self.didUpdateTipPercentage?(Int(text))
   }
 }
 
@@ -146,6 +175,17 @@ extension MainView {
 
   private static func styleBillTotalTextField(_ textField: UITextField, currency: String) {
     textField.attributedPlaceholder = NSAttributedString(string: "0 \(currency)", attributes: TextStyle.textFieldPlaceholder)
+    textField.defaultTextAttributes = TextStyle.textFieldText
+  }
+
+  private static func styleTipPercentageLabel(_ label: UILabel) {
+    label.attributedText = NSAttributedString(string: "Tip Percentage", attributes: TextStyle.sectionTitle)
+    label.numberOfLines = 0
+    label.minimumScaleFactor = 0.6
+  }
+
+  private static func styleTipPercentageTextField(_ textField: UITextField) {
+    textField.attributedPlaceholder = NSAttributedString(string: "0 %", attributes: TextStyle.textFieldPlaceholder)
     textField.defaultTextAttributes = TextStyle.textFieldText
   }
 }

@@ -118,3 +118,10 @@ extension CustomTextField {
   }
 }
 
+extension String {
+  /// Checks if the String contains any digit.
+  var containsDigit: Bool {
+    guard !self.isEmpty else { return false }
+    return self.contains { Int(String($0)) != nil }
+  }
+}

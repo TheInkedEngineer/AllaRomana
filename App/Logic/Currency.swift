@@ -165,7 +165,6 @@ enum Currency: String {
   case unidadDeValorReal = "Unidad de Valor Real"
   case uruguayPesoEnUnidadesIndexadas = "Uruguay Peso en Unidades Indexadas"
   case usDollar = "US Dollar"
-  case usDollarNextDay = "US Dollar (Next day)"
   case uzbekistanSum = "Uzbekistan Sum"
   case vatu = "Vatu"
   case won = "Won"
@@ -176,6 +175,7 @@ enum Currency: String {
   case zimbabweDollar = "Zimbabwe Dollar"
   case zloty = "Zloty"
 
+  /// The unique code of the currency by `ISO 4217`.
   var code: String {
     switch self {
     case .afghani:
@@ -487,8 +487,6 @@ enum Currency: String {
     case .uruguayPesoEnUnidadesIndexadas:
       return "UYI"
     case .usDollar:
-      return "USD"
-    case .usDollarNextDay:
       return "USN"
     case .uzbekistanSum:
       return "UZS"
@@ -511,6 +509,7 @@ enum Currency: String {
     }
   }
 
+  /// The native symbol of the currency.
   var symbol: String {
     switch self {
     case .afghani:
@@ -823,8 +822,6 @@ enum Currency: String {
       return "$"
     case .usDollar:
       return "$"
-    case .usDollarNextDay:
-      return "$"
     case .uzbekistanSum:
       return "лв"
     case .vatu:
@@ -844,5 +841,11 @@ enum Currency: String {
     case .zloty:
       return "zł"
     }
+  }
+
+  /// Returns a detailed representation of the currency.
+  /// Example: US Dollar (USD)
+  var detailedRepresentation: String {
+    return "\(self.rawValue) (\(self.code))"
   }
 }

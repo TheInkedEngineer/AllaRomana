@@ -23,7 +23,9 @@ class MainVC: SKViewController<MainView> {
     }
 
     self.rootView.didTapSettingsButton = { [weak self] in
-      #warning("implement")
+      guard let self = self else { return }
+      let settingsVM = SettingsVM()
+      SettingsLogic.show(from: self, with: settingsVM)
     }
 
     self.rootView.didTapDecreaseSharesButton = { [weak self] in

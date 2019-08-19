@@ -231,7 +231,7 @@ class MainView: UIView, SKModelledView {
     sharePerPersonInfoContainer.heightAnchor.constraint(
       // height of both labels plus the vertical distance between them.
       equalToConstant: self.sharePerPersonTitleLabel.intrinsicContentSize.height + self.sharePerPersonAmount.intrinsicContentSize.height + 10
-    )
+    ).isActive = true
     sharePerPersonInfoContainer.leadingAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.leadingAnchor, constant: 50).isActive = true
     sharePerPersonInfoContainer.trailingAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.trailingAnchor, constant: -50).isActive = true
     sharePerPersonInfoContainer.centerYAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.centerYAnchor).isActive = true

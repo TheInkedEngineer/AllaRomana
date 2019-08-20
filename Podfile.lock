@@ -1,20 +1,24 @@
 PODS:
+  - SKWorldCurrencies (1.0.0)
   - SwiftGen (6.0.0)
   - SwiftKnife (2.0.2)
 
 DEPENDENCIES:
+  - SKWorldCurrencies (= 1.0)
   - SwiftGen (= 6.0)
   - SwiftKnife (= 2.0.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - SKWorldCurrencies
     - SwiftGen
     - SwiftKnife
 
 SPEC CHECKSUMS:
+  SKWorldCurrencies: 89d07329cccf34451940243cd6135869ca0dddb1
   SwiftGen: cd0bb0c9838c3fc90b78d35b19f492711b19eb55
   SwiftKnife: d6e6c43b9f1bb24848011d1bca4073cec2103e0e
 
-PODFILE CHECKSUM: 0ea45f07f89cb414e68415d4cf17924e40bc7e08
+PODFILE CHECKSUM: dd7b180f50ea7b32bbbd9f85043f3618aa14e565
 
 COCOAPODS: 1.7.5

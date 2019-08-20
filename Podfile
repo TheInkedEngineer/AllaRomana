@@ -7,6 +7,7 @@ use_frameworks!
 def common_dependencies
     pod 'SwiftKnife', '2.0.2'
     pod 'SwiftGen', '6.0'
+    pod 'SKWorldCurrencies', '1.0'
 end
 
 target 'AllaRomana' do

@@ -6,6 +6,7 @@
 
 import UIKit
 import SwiftKnife
+import SKWorldCurrencies
 
 class MainView: UIView, SKModelledView {
 

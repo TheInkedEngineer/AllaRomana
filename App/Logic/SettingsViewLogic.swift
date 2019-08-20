@@ -5,6 +5,7 @@
 // 
 
 import UIKit
+import SKWorldCurrencies
 
 enum SettingsLogic {
   /// The currency used in the app.

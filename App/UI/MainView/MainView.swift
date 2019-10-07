@@ -101,7 +101,8 @@ class MainView: UIView, SKModelledView {
   
   func configure() {
     self.addSubview(self.resetButton)
-    self.addSubview(self.settingsButton)
+    #warning("removed for first release.")
+//    self.addSubview(self.settingsButton)
     self.addSubview(self.billTotalSectionTitleLabel)
     self.addSubview(self.billTotalTextField)
     self.addSubview(self.tipPercentageSectionTitleLabel)
@@ -151,15 +152,16 @@ class MainView: UIView, SKModelledView {
     self.resetButton.widthAnchor.constraint(equalToConstant: Asset.trashCan.image.size.width).isActive = true
     self.resetButton.heightAnchor.constraint(equalToConstant: Asset.trashCan.image.size.height).isActive = true
 
-    self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
-    self.settingsButton.centerYAnchor.constraint(equalTo: self.resetButton.centerYAnchor).isActive = true
-    self.settingsButton.trailingAnchor.constraint(equalTo: self.resetButton.leadingAnchor, constant: -15).isActive = true
-    self.settingsButton.widthAnchor.constraint(equalToConstant: Asset.settingsWheel.image.size.width).isActive = true
-    self.settingsButton.heightAnchor.constraint(equalToConstant: Asset.settingsWheel.image.size.height).isActive = true
+    #warning("removed for first release.")
+//    self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
+//    self.settingsButton.centerYAnchor.constraint(equalTo: self.resetButton.centerYAnchor).isActive = true
+//    self.settingsButton.trailingAnchor.constraint(equalTo: self.resetButton.leadingAnchor, constant: -15).isActive = true
+//    self.settingsButton.widthAnchor.constraint(equalToConstant: Asset.settingsWheel.image.size.width).isActive = true
+//    self.settingsButton.heightAnchor.constraint(equalToConstant: Asset.settingsWheel.image.size.height).isActive = true
 
     self.billTotalSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     self.billTotalSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.billTotalSectionTitleLabel.topAnchor.constraint(equalTo: self.settingsButton.bottomAnchor, constant: MainView.distanceBetweenSections).isActive = true
+    self.billTotalSectionTitleLabel.topAnchor.constraint(equalTo: self.resetButton.bottomAnchor, constant: MainView.distanceBetweenSections).isActive = true
     self.billTotalSectionTitleLabel.sizeToFit()
 
     self.billTotalTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -255,10 +257,10 @@ class MainView: UIView, SKModelledView {
 
     MainView.styleNumberOfSharesLabel(self.numberOfSharesLabel, shares: model.numberOfShares)
     MainView.styleDecreaseNumberOfSharesButton(self.decreaseNumberOfSharesButton, isEnabled: model.isDecreaseNumberOfSharesButtonEnabled)
-    MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.rawValue, shouldReset: model.shouldDeleteBillTotalTextFieldContent)
+    MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.symbol, shouldReset: model.shouldDeleteBillTotalTextFieldContent)
     MainView.styleTipPercentageTextField(self.tipPercentageTextField, shouldReset: model.shouldDeleteTipPercentageTextFieldContent)
     MainView.styleSharePerPersonTitleLabel(self.sharePerPersonTitleLabel, with: model.sharePerPersonTitleText)
-    MainView.styleSharePerPersonAmount(self.sharePerPersonAmount, amount: model.sharePerPerson, currency: model.currency)
+    MainView.styleSharePerPersonAmount(self.sharePerPersonAmount, amount: model.sharePerPerson, currency: model.currencySymbol)
   }
 
   //MARK: - User Interaction

@@ -8,38 +8,51 @@ import UIKit
 import SwiftKnife
 
 class KeyboardView: UIView, SKView {
-
+  
   // MARK: - Properties
-
+  
   /// The delegate to manage the various events.
   weak var delegate: KeyboardDelegate?
-
+  
   /// The height of the keyboard.
   static let keyboardHeight = UIScreen.portraitHeight * 0.32383808
-
+  
   /// The width of the keyboard
   static let keyboardWidth = UIScreen.portraitWidth
-
+  
   /// A shared instance of the keyboard
   static var shared: KeyboardView {
-    #warning("this does not currently work for keywindow is nil")
-    let bottomSafeAreaInsets = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
-
+    // if the keyboard is to be used in the main view before the keyWindow is set (like in this app's case)
+    // there is no way to find out the actual bottom safe area.
+    // In order to fit newer iPhones without compromising that space we add a fallback value of 40.
+    var bottomSafeAreaInsets: CGFloat {
+      if let keyWindow = UIApplication.shared.keyWindow {
+        return keyWindow.safeAreaInsets.bottom
+      }
+      
+      let device = UIDevice().device
+      print(UIScreen.portraitHeight)
+      if device == .iPhoneSE || device == .iPhone6 || device == .iPhone7 || device == .iPhone8 || UIScreen.portraitHeight <= 667 {
+        return 0
+      }
+      return 34
+    }
+    
     let frame = CGRect(
       x: 0,
       y: 0,
       width: UIScreen.portraitWidth,
       height: UIScreen.portraitHeight * 0.32383808 + bottomSafeAreaInsets
     )
-
+    
     return KeyboardView(frame: frame)
   }
-
+  
   /// The keys inside the keypad.
   let keys: [NumpadKey] = [.one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .decimal, .zero, .backspace]
-
+  
   // MARK: - UI Elements
-
+  
   lazy var keypadCollection: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
@@ -52,40 +65,40 @@ class KeyboardView: UIView, SKView {
     collection.isScrollEnabled = false
     return collection
   }()
-
+  
   // MARK: - init
-
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
-
+    
     self.configure()
     self.style()
     self.layout()
   }
-
+  
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-
+    
     self.configure()
     self.style()
     self.layout()
   }
-
-
+  
+  
   // MARK: - CSUL
-
+  
   func configure() {
     self.keypadCollection.delegate = self
     self.keypadCollection.dataSource = self
     self.addSubview(self.keypadCollection)
   }
-
+  
   func style() {
     KeyboardView.styleKeyboard(self)
   }
-
+  
   func update() {}
-
+  
   func layout() {
     self.keypadCollection.translatesAutoresizingMaskIntoConstraints = false
     self.keypadCollection.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -124,13 +137,13 @@ extension KeyboardView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return self.keys.count
   }
-
+  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: KeypadCell.identifier, for: indexPath) as? KeypadCell else {
-      SKFatalError("Could not properly dequeue cell.")
+        SKFatalError("Could not properly dequeue cell.")
     }
-
+    
     cell.model = KeypadCellVM(text: self.keys[safe: indexPath.row]?.visualValue, image: nil)
     return cell
   }

@@ -8,7 +8,7 @@ import Foundation
 
 struct MainVM: SKViewModel {
   /// The current used currency.
-  let currency: String = SettingsLogic.currency.rawValue
+  let currencySymbol: String = SettingsLogic.currency.symbol
 
   /// the currently inserted bill amount.
   let currentBillAmount: Double?

@@ -17,6 +17,8 @@ targets:
     attributes:
       ProvisioningStyle: Automatic
     sources: [App]
+    settings:
+      TARGETED_DEVICE_FAMILY: 1
     info:
       path: App/Resources/Info.plist
       properties:

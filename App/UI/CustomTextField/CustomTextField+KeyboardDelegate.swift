@@ -8,7 +8,7 @@ extension CustomTextField: KeyboardDelegate {
 
   /// Properly formatted currency with spacing.
   private var currency: String {
-    return " \(SettingsLogic.currency.rawValue)"
+    return " \(SettingsLogic.currency.symbol)"
   }
 
   func keyPressed(_ key: NumpadKey) {

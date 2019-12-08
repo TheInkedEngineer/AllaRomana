@@ -112,102 +112,102 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
   func layout() {
     guard let keyboard = self.billTotalTextField.inputView else { return }
 
-    self.resetButton.translatesAutoresizingMaskIntoConstraints = false
-    self.resetButton.topAnchor.constraint(equalTo: self.topAnchor, constant: self.safeAreaInsets.top + 20).isActive = true
-    self.resetButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
-    self.resetButton.widthAnchor.constraint(equalToConstant: Asset.trashCan.image.size.width).isActive = true
-    self.resetButton.heightAnchor.constraint(equalToConstant: Asset.trashCan.image.size.height).isActive = true
+    self.resetButton.activateAutoLayout()
+    self.resetButton.topAnchor.constraint(equalTo: self.topAnchor, constant: self.safeAreaInsets.top + 20).activate()
+    self.resetButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).activate()
+    self.resetButton.widthAnchor.constraint(equalToConstant: Asset.trashCan.image.size.width).activate()
+    self.resetButton.heightAnchor.constraint(equalToConstant: Asset.trashCan.image.size.height).activate()
 
-    self.billTotalSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.billTotalSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.billTotalSectionTitleLabel.topAnchor.constraint(equalTo: self.resetButton.bottomAnchor, constant: MainView.distanceBetweenSections).isActive = true
+    self.billTotalSectionTitleLabel.activateAutoLayout()
+    self.billTotalSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).activate()
+    self.billTotalSectionTitleLabel.topAnchor.constraint(equalTo: self.resetButton.bottomAnchor, constant: MainView.distanceBetweenSections).activate()
     self.billTotalSectionTitleLabel.sizeToFit()
 
-    self.billTotalTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.billTotalTextField.leadingAnchor.constraint(equalTo: self.billTotalSectionTitleLabel.leadingAnchor).isActive = true
-    self.billTotalTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
-    self.billTotalTextField.topAnchor.constraint(equalTo: self.billTotalSectionTitleLabel.bottomAnchor, constant: MainView.distanceFromSectionTitle).isActive = true
-    self.billTotalTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+    self.billTotalTextField.activateAutoLayout()
+    self.billTotalTextField.leadingAnchor.constraint(equalTo: self.billTotalSectionTitleLabel.leadingAnchor).activate()
+    self.billTotalTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).activate()
+    self.billTotalTextField.topAnchor.constraint(equalTo: self.billTotalSectionTitleLabel.bottomAnchor, constant: MainView.distanceFromSectionTitle).activate()
+    self.billTotalTextField.heightAnchor.constraint(equalToConstant: 30).activate()
 
-    self.tipPercentageSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.tipPercentageSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.tipPercentageSectionTitleLabel.topAnchor.constraint(equalTo: self.billTotalTextField.bottomAnchor, constant: MainView.distanceBetweenSections).isActive = true
+    self.tipPercentageSectionTitleLabel.activateAutoLayout()
+    self.tipPercentageSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).activate()
+    self.tipPercentageSectionTitleLabel.topAnchor.constraint(equalTo: self.billTotalTextField.bottomAnchor, constant: MainView.distanceBetweenSections).activate()
     self.tipPercentageSectionTitleLabel.sizeToFit()
 
-    self.tipPercentageTextField.translatesAutoresizingMaskIntoConstraints = false
-    self.tipPercentageTextField.leadingAnchor.constraint(equalTo: self.tipPercentageSectionTitleLabel.leadingAnchor).isActive = true
-    self.tipPercentageTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
+    self.tipPercentageTextField.activateAutoLayout()
+    self.tipPercentageTextField.leadingAnchor.constraint(equalTo: self.tipPercentageSectionTitleLabel.leadingAnchor).activate()
+    self.tipPercentageTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).activate()
     self.tipPercentageTextField.topAnchor.constraint(
       equalTo: self.tipPercentageSectionTitleLabel.bottomAnchor,
       constant: MainView.distanceFromSectionTitle
-      ).isActive = true
-    self.tipPercentageTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+      ).activate()
+    self.tipPercentageTextField.heightAnchor.constraint(equalToConstant: 30).activate()
 
-    self.sharesSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.sharesSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.sharesSectionTitleLabel.topAnchor.constraint(equalTo: self.tipPercentageTextField.bottomAnchor, constant: MainView.distanceBetweenSections).isActive = true
+    self.sharesSectionTitleLabel.activateAutoLayout()
+    self.sharesSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).activate()
+    self.sharesSectionTitleLabel.topAnchor.constraint(equalTo: self.tipPercentageTextField.bottomAnchor, constant: MainView.distanceBetweenSections).activate()
     self.sharesSectionTitleLabel.sizeToFit()
 
-    self.numberOfSharesLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.numberOfSharesLabel.activateAutoLayout()
     self.numberOfSharesLabel.topAnchor.constraint(
       equalTo: self.sharesSectionTitleLabel.bottomAnchor,
       constant: MainView.distanceFromSectionTitle
-      ).isActive = true
+      ).activate()
     self.numberOfSharesLabel.leadingAnchor.constraint(
       equalTo: self.leadingAnchor,
       constant: MainView.leftMargin + Asset.minusButtonEnabled.image.size.width + 15 // left margin + image size + distance from image
-      ).isActive = true
-    self.numberOfSharesLabel.heightAnchor.constraint(equalToConstant: self.numberOfSharesLabel.intrinsicContentSize.height).isActive = true
+      ).activate()
+    self.numberOfSharesLabel.heightAnchor.constraint(equalToConstant: self.numberOfSharesLabel.intrinsicContentSize.height).activate()
     // a fixed with was assigned to avoid having the increase button change position.
     // number 8 is the largest number in size with the apps font.
     // 50 for width is enough to fit 888, plus a scale refactor of 0.2 was assigned to the label to adjust the size.
-    self.numberOfSharesLabel.widthAnchor.constraint(equalToConstant: 50).isActive = true
+    self.numberOfSharesLabel.widthAnchor.constraint(equalToConstant: 50).activate()
 
-    self.decreaseNumberOfSharesButton.translatesAutoresizingMaskIntoConstraints = false
-    self.decreaseNumberOfSharesButton.centerYAnchor.constraint(equalTo: self.numberOfSharesLabel.centerYAnchor).isActive = true
-    self.decreaseNumberOfSharesButton.widthAnchor.constraint(equalToConstant: Asset.minusButtonEnabled.image.size.width).isActive = true
-    self.decreaseNumberOfSharesButton.heightAnchor.constraint(equalToConstant: Asset.minusButtonEnabled.image.size.height).isActive = true
-    self.decreaseNumberOfSharesButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
+    self.decreaseNumberOfSharesButton.activateAutoLayout()
+    self.decreaseNumberOfSharesButton.centerYAnchor.constraint(equalTo: self.numberOfSharesLabel.centerYAnchor).activate()
+    self.decreaseNumberOfSharesButton.widthAnchor.constraint(equalToConstant: Asset.minusButtonEnabled.image.size.width).activate()
+    self.decreaseNumberOfSharesButton.heightAnchor.constraint(equalToConstant: Asset.minusButtonEnabled.image.size.height).activate()
+    self.decreaseNumberOfSharesButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).activate()
 
-    self.increaseNumberOfSharesButton.translatesAutoresizingMaskIntoConstraints = false
-    self.increaseNumberOfSharesButton.centerYAnchor.constraint(equalTo: self.numberOfSharesLabel.centerYAnchor).isActive = true
-    self.increaseNumberOfSharesButton.widthAnchor.constraint(equalToConstant: Asset.plusButtonEnabled.image.size.width).isActive = true
-    self.increaseNumberOfSharesButton.heightAnchor.constraint(equalToConstant: Asset.plusButtonEnabled.image.size.height).isActive = true
-    self.increaseNumberOfSharesButton.leadingAnchor.constraint(equalTo: self.numberOfSharesLabel.trailingAnchor, constant: 15).isActive = true
+    self.increaseNumberOfSharesButton.activateAutoLayout()
+    self.increaseNumberOfSharesButton.centerYAnchor.constraint(equalTo: self.numberOfSharesLabel.centerYAnchor).activate()
+    self.increaseNumberOfSharesButton.widthAnchor.constraint(equalToConstant: Asset.plusButtonEnabled.image.size.width).activate()
+    self.increaseNumberOfSharesButton.heightAnchor.constraint(equalToConstant: Asset.plusButtonEnabled.image.size.height).activate()
+    self.increaseNumberOfSharesButton.leadingAnchor.constraint(equalTo: self.numberOfSharesLabel.trailingAnchor, constant: 15).activate()
 
     let spaceBetweenSharesAndKeyboard = UILayoutGuide()
     self.addLayoutGuide(spaceBetweenSharesAndKeyboard)
-    spaceBetweenSharesAndKeyboard.topAnchor.constraint(equalTo: self.increaseNumberOfSharesButton.bottomAnchor).isActive = true
-    spaceBetweenSharesAndKeyboard.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -keyboard.frame.height).isActive = true
-    spaceBetweenSharesAndKeyboard.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    spaceBetweenSharesAndKeyboard.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+    spaceBetweenSharesAndKeyboard.topAnchor.constraint(equalTo: self.increaseNumberOfSharesButton.bottomAnchor).activate()
+    spaceBetweenSharesAndKeyboard.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -keyboard.frame.height).activate()
+    spaceBetweenSharesAndKeyboard.leadingAnchor.constraint(equalTo: self.leadingAnchor).activate()
+    spaceBetweenSharesAndKeyboard.trailingAnchor.constraint(equalTo: self.trailingAnchor).activate()
 
-    self.sharePerPersonSectionBackground.translatesAutoresizingMaskIntoConstraints = false
-    self.sharePerPersonSectionBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
-    self.sharePerPersonSectionBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
-    self.sharePerPersonSectionBackground.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.12315271).isActive = true
-    self.sharePerPersonSectionBackground.centerYAnchor.constraint(equalTo: spaceBetweenSharesAndKeyboard.centerYAnchor).isActive = true
+    self.sharePerPersonSectionBackground.activateAutoLayout()
+    self.sharePerPersonSectionBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).activate()
+    self.sharePerPersonSectionBackground.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).activate()
+    self.sharePerPersonSectionBackground.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.12315271).activate()
+    self.sharePerPersonSectionBackground.centerYAnchor.constraint(equalTo: spaceBetweenSharesAndKeyboard.centerYAnchor).activate()
 
     let sharePerPersonInfoContainer = UILayoutGuide()
     self.addLayoutGuide(sharePerPersonInfoContainer)
     sharePerPersonInfoContainer.heightAnchor.constraint(
       // height of both labels plus the vertical distance between them.
       equalToConstant: self.sharePerPersonTitleLabel.intrinsicContentSize.height + self.sharePerPersonAmount.intrinsicContentSize.height + 10
-    ).isActive = true
-    sharePerPersonInfoContainer.leadingAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.leadingAnchor, constant: 50).isActive = true
-    sharePerPersonInfoContainer.trailingAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.trailingAnchor, constant: -50).isActive = true
-    sharePerPersonInfoContainer.centerYAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.centerYAnchor).isActive = true
+    ).activate()
+    sharePerPersonInfoContainer.leadingAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.leadingAnchor, constant: 50).activate()
+    sharePerPersonInfoContainer.trailingAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.trailingAnchor, constant: -50).activate()
+    sharePerPersonInfoContainer.centerYAnchor.constraint(equalTo: self.sharePerPersonSectionBackground.centerYAnchor).activate()
 
-    self.sharePerPersonTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.sharePerPersonTitleLabel.leadingAnchor.constraint(equalTo: sharePerPersonInfoContainer.leadingAnchor).isActive = true
-    self.sharePerPersonTitleLabel.trailingAnchor.constraint(equalTo: sharePerPersonInfoContainer.trailingAnchor).isActive = true
-    self.sharePerPersonTitleLabel.topAnchor.constraint(equalTo: sharePerPersonInfoContainer.topAnchor).isActive = true
+    self.sharePerPersonTitleLabel.activateAutoLayout()
+    self.sharePerPersonTitleLabel.leadingAnchor.constraint(equalTo: sharePerPersonInfoContainer.leadingAnchor).activate()
+    self.sharePerPersonTitleLabel.trailingAnchor.constraint(equalTo: sharePerPersonInfoContainer.trailingAnchor).activate()
+    self.sharePerPersonTitleLabel.topAnchor.constraint(equalTo: sharePerPersonInfoContainer.topAnchor).activate()
     self.sharePerPersonTitleLabel.sizeToFit()
 
-    self.sharePerPersonAmount.translatesAutoresizingMaskIntoConstraints = false
-    self.sharePerPersonAmount.leadingAnchor.constraint(equalTo: sharePerPersonInfoContainer.leadingAnchor).isActive = true
-    self.sharePerPersonAmount.trailingAnchor.constraint(equalTo: sharePerPersonInfoContainer.trailingAnchor).isActive = true
-    self.sharePerPersonAmount.bottomAnchor.constraint(equalTo: sharePerPersonInfoContainer.bottomAnchor).isActive = true
+    self.sharePerPersonAmount.activateAutoLayout()
+    self.sharePerPersonAmount.leadingAnchor.constraint(equalTo: sharePerPersonInfoContainer.leadingAnchor).activate()
+    self.sharePerPersonAmount.trailingAnchor.constraint(equalTo: sharePerPersonInfoContainer.trailingAnchor).activate()
+    self.sharePerPersonAmount.bottomAnchor.constraint(equalTo: sharePerPersonInfoContainer.bottomAnchor).activate()
     self.sharePerPersonAmount.sizeToFit()
   }
 

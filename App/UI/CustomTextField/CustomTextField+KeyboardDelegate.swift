@@ -4,6 +4,7 @@
 //  Copyright © 2019 TheInkedEngineer. All rights reserved.
 // 
 
+import SwiftKnife
 import SKWorldCurrencies
 
 extension CustomTextField: KeyboardDelegate {
@@ -90,17 +91,17 @@ extension CustomTextField {
     self.text?.append(self.currency)
   }
 
-  /// Adds the percentage symbol to end of string.
-  private func addPercentage() {
-    self.text?.append(" %")
-  }
-
   /// Removes the percentage symbol from end of string.
   private func removePercentage() {
     if let text = self.text, text.count > 0 {
       guard let rangeOfPercentage = text.range(of: " %") else { return }
       self.text?.removeSubrange(rangeOfPercentage)
     }
+  }
+
+  /// Adds the percentage symbol to end of string.
+  private func addPercentage() {
+    self.text?.append(" %")
   }
 
   /// Position the curson at the end of the digits string before the currency or percentage suffix.
@@ -115,13 +116,5 @@ extension CustomTextField {
     }
     guard let position = self.position(from: beginningOfDocument, offset: offset) else { return }
     self.selectedTextRange = self.textRange(from: position, to: position)
-  }
-}
-
-extension String {
-  /// Checks if the String contains any digit.
-  var containsDigit: Bool {
-    guard !self.isEmpty else { return false }
-    return self.contains { Int(String($0)) != nil }
   }
 }

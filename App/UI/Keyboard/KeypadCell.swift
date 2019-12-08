@@ -14,7 +14,6 @@ class KeypadCellVM: BMViewModel {
 
   /// the possible text to write in the cell.
   var text: String?
-
   /// the possible image inside the cell.
   var image: UIImage?
 
@@ -31,6 +30,8 @@ class KeypadCellVM: BMViewModel {
     return self.image != nil
   }
 
+  // MARK: - Init
+  
   init(text: String?, image: UIImage?) {
     self.text = text
     self.image = image
@@ -43,18 +44,13 @@ class KeypadCell: UICollectionViewCell, BMViewWithViewModel {
 
   /// The unique identifier of the cell.
   static let identifier = "KeypadCell"
-
-  override var reuseIdentifier: String? {
-    return KeypadCell.identifier
-  }
-
+  override var reuseIdentifier: String? { KeypadCell.identifier }
   /// The label containing the optional text.
   let label = UILabel()
-
   /// The possible image of the button.
   let imageView = UIImageView()
 
-  // MARKK: - init
+  // MARK: - Init
 
   /// init by code.
   override init(frame: CGRect) {
@@ -92,14 +88,14 @@ class KeypadCell: UICollectionViewCell, BMViewWithViewModel {
 
   func layout() {
 
-    self.label.translatesAutoresizingMaskIntoConstraints = false
-    self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-    self.label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+    self.label.activateAutoLayout()
+    self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor).activate()
+    self.label.centerYAnchor.constraint(equalTo: self.centerYAnchor).activate()
     self.label.sizeToFit()
 
-    self.imageView.translatesAutoresizingMaskIntoConstraints = false
-    self.imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-    self.imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+    self.imageView.activateAutoLayout()
+    self.imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).activate()
+    self.imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).activate()
     self.imageView.sizeToFit()
   }
 }
@@ -116,7 +112,7 @@ extension KeypadCell {
       label.isHidden = true
       return
     }
-    label.attributedText = NSAttributedString(string: content, attributes: TextStyle.KeypadContent)
+    label.attributedText = NSAttributedString(string: content, attributes: TextStyle.keypadContent)
     label.isVisible = true
   }
 

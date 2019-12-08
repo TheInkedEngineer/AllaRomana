@@ -14,12 +14,12 @@ class KeyboardView: UIView, BMView {
   
   /// The delegate to manage the various events.
   weak var delegate: KeyboardDelegate?
-  
   /// The height of the keyboard.
   static let keyboardHeight = UIScreen.portraitHeight * 0.32383808
-  
   /// The width of the keyboard
   static let keyboardWidth = UIScreen.portraitWidth
+  /// The keys inside the keypad.
+  let keys: [NumpadKey] = [.one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .decimal, .zero, .backspace]
   
   /// A shared instance of the keyboard
   static var `default`: KeyboardView {
@@ -53,9 +53,6 @@ class KeyboardView: UIView, BMView {
     
     return KeyboardView(frame: frame)
   }
-  
-  /// The keys inside the keypad.
-  let keys: [NumpadKey] = [.one, .two, .three, .four, .five, .six, .seven, .eight, .nine, .decimal, .zero, .backspace]
   
   // MARK: - UI Elements
   
@@ -106,11 +103,11 @@ class KeyboardView: UIView, BMView {
   func update() {}
   
   func layout() {
-    self.keypadCollection.translatesAutoresizingMaskIntoConstraints = false
-    self.keypadCollection.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-    self.keypadCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    self.keypadCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    self.keypadCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+    self.keypadCollection.activateAutoLayout()
+    self.keypadCollection.topAnchor.constraint(equalTo: self.topAnchor).activate()
+    self.keypadCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor).activate()
+    self.keypadCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor).activate()
+    self.keypadCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor).activate()
   }
 }
 
@@ -137,7 +134,7 @@ extension KeyboardView: UICollectionViewDelegate {
 }
 
 
-// Mark: - DataSource
+// MARK: - DataSource
 
 extension KeyboardView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

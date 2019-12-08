@@ -1,0 +1,28 @@
+PODS:
+  - BloodyMary (1.0.1)
+  - SKWorldCurrencies (1.0.0)
+  - SwiftGen (6.0.0)
+  - SwiftKnife (3.4.0)
+
+DEPENDENCIES:
+  - BloodyMary (= 1.0.1)
+  - SKWorldCurrencies (= 1.0)
+  - SwiftGen (= 6.0)
+  - SwiftKnife (= 3.4)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - BloodyMary
+    - SKWorldCurrencies
+    - SwiftGen
+    - SwiftKnife
+
+SPEC CHECKSUMS:
+  BloodyMary: 6911e749eb44e16cf3160eda555d3db19c789cf8
+  SKWorldCurrencies: 89d07329cccf34451940243cd6135869ca0dddb1
+  SwiftGen: cd0bb0c9838c3fc90b78d35b19f492711b19eb55
+  SwiftKnife: bd7100c102464ffce879734ca363db45bb3fb76d
+
+PODFILE CHECKSUM: f68ccff2e7732bbb1a370bcf3f894c2d6d0a16cc
+
+COCOAPODS: 1.8.4

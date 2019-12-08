@@ -1,0 +1,62 @@
+name: AllaRomana
+
+options:
+  minimumXcodeGenVersion: "2.5.0"
+  bundleIdPrefix: com.theInkedEngineer
+  indentWidth: 2
+  xcodeVersion: 10.2.1
+  deploymentTarget:
+    iOS: "11.0"
+    devices: "iPhone"
+  generateEmptyDirectories: true
+  
+targets:
+  AllaRomana:
+    type: application
+    platform: iOS
+    attributes:
+      ProvisioningStyle: Automatic
+    sources: [App]
+    settings:
+      TARGETED_DEVICE_FAMILY: 1
+    info:
+      path: App/Resources/Info.plist
+      properties:
+        CFBundleIdentifier: "$(PRODUCT_BUNDLE_IDENTIFIER)"
+        CFBundleInfoDictionaryVersion: "6.0"
+        CFBundleExecutable: "$(EXECUTABLE_NAME)"
+        CFBundleName: "$(PRODUCT_NAME)"
+        CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        CFBundlePackageType: "APPL"
+        LSRequiresIPhoneOS: true
+        UILaunchStoryboardName: "LaunchScreen"
+        UIRequiredDeviceCapabilities: ["armv7"]
+        UISupportedInterfaceOrientations: ["UIInterfaceOrientationPortrait"]
+      preBuildScripts:
+        - script: "Pods/SwiftGen/bin/swiftgen"
+
+  AllaRomanaTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: AllaRomana
+    settings:
+      INFOPLIST_FILE: Tests/Resources/Info.plist
+
+schemes:
+  App:
+    build:
+      targets:
+        AllaRomana: all
+        AllaRomanaTests: [test]
+    test:
+      gatherCoverageData: true
+      randomExecutionOrder: false
+      targets: [AllaRomanaTests]
+    archive:
+      customArchiveName: AllaRomana
+      revealArchiveInOrganizer: true

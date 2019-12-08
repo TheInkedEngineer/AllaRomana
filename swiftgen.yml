@@ -1,0 +1,6 @@
+xcassets:
+  inputs:
+    - App/Style/Images.xcassets
+  outputs:
+    - templateName: swift4
+      output: App/Style/Assets.swift

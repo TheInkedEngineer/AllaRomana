@@ -1,5 +1,5 @@
 <p align="center">
-<img src="icon.png" alt="App logo" width="250">
+<img src="app_icon.png" alt="App logo" width="250">
 </p>
 
 # AllaRomana

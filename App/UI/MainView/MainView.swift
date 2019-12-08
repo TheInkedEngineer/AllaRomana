@@ -100,13 +100,13 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
     self.addSubview(self.sharePerPersonAmount)
 
     self.billTotalTextField.delegate = self
-    self.billTotalTextField.inputView = KeyboardView.shared
+    self.billTotalTextField.inputView = KeyboardView.default
     (self.billTotalTextField.inputView as? KeyboardView)?.delegate = self.billTotalTextField
     self.billTotalTextField.addTarget(self, action: #selector(self.updatedBillTotal), for: .editingChanged)
     self.billTotalTextField.becomeFirstResponder()
 
     self.tipPercentageTextField.delegate = self
-    self.tipPercentageTextField.inputView = KeyboardView.shared
+    self.tipPercentageTextField.inputView = KeyboardView.default
     (self.tipPercentageTextField.inputView as? KeyboardView)?.delegate = self.tipPercentageTextField
     self.tipPercentageTextField.addTarget(self, action: #selector(self.updatedTipPercentage), for: .editingChanged)
 

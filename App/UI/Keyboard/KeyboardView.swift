@@ -22,7 +22,7 @@ class KeyboardView: UIView, BMView {
   static let keyboardWidth = UIScreen.portraitWidth
   
   /// A shared instance of the keyboard
-  static var shared: KeyboardView {
+  static var `default`: KeyboardView {
     // if the keyboard is to be used in the main view before the keyWindow is set (like in this app's case)
     // there is no way to find out the actual bottom safe area.
     // In order to fit newer iPhones without compromising that space we add a fallback value of 40.
@@ -32,8 +32,13 @@ class KeyboardView: UIView, BMView {
       }
       
       let device = UIDevice().device
-      print(UIScreen.portraitHeight)
-      if device == .iPhoneSE || device == .iPhone6 || device == .iPhone7 || device == .iPhone8 || UIScreen.portraitHeight <= 667 {
+      
+      if
+        device == .iPhoneSE ||
+        device == .iPhone6 ||
+        device == .iPhone7 ||
+        device == .iPhone8 ||
+        UIScreen.portraitHeight <= 667 {
         return 0
       }
       return 34

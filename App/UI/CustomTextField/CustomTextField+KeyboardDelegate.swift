@@ -81,14 +81,14 @@ extension CustomTextField {
   /// Removes the currency from end of string.
   private func removeCurrency() {
     if let text = self.text, text.count > 0 {
-      guard let rangeOfCurrency = text.range(of: self.currency) else { return }
+      guard let rangeOfCurrency = text.range(of:" \(self.currency)") else { return }
       self.text?.removeSubrange(rangeOfCurrency)
     }
   }
 
   /// Adds the currency to end of string.
   private func addCurrency() {
-    self.text?.append(self.currency)
+    self.text?.append(" \(self.currency)")
   }
 
   /// Removes the percentage symbol from end of string.
@@ -110,9 +110,9 @@ extension CustomTextField {
     let offset: Int
     switch self.textFieldType {
     case .money:
-      offset = text.count - self.currency.count
+      offset = text.count - 1 - self.currency.count // currency symbol length + 1 space
     case .tips:
-      offset = text.count - 2
+      offset = text.count - 2 // 1 space + percentage symbol
     }
     guard let position = self.position(from: beginningOfDocument, offset: offset) else { return }
     self.selectedTextRange = self.textRange(from: position, to: position)

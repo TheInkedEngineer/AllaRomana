@@ -381,17 +381,11 @@ extension MainView: UITextFieldDelegate {
   }
 
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    guard let key = NumpadKey.key(for: string) else {
+    guard let key = NumpadKey.key(for: string), let textField = (textField as? CustomTextField) else {
       return false
     }
 
-    if
-      let text = textField.text,
-      key.replacementValue == NumpadKey.decimal.replacementValue,
-      text.contains(key.replacementValue) {
-      return false
-    }
-
-    return true
+    textField.keyPressed(key)
+    return false
   }
 }

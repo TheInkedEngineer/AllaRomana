@@ -1,5 +1,5 @@
 // swiftlint:disable all
-// Generated using SwiftGen, by O.Halligon — https://github.com/SwiftGen/SwiftGen
+// Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
 
 #if os(OSX)
   import AppKit.NSImage
@@ -21,6 +21,7 @@ internal enum Asset {
   internal static let keyboardBackspace = ImageAsset(name: "keyboard_backspace")
   internal static let minusButtonDisabled = ImageAsset(name: "minus_button_disabled")
   internal static let minusButtonEnabled = ImageAsset(name: "minus_button_enabled")
+  internal static let plusButtonDisabled = ImageAsset(name: "plus_button_disabled")
   internal static let plusButtonEnabled = ImageAsset(name: "plus_button_enabled")
   internal static let settingsWheel = ImageAsset(name: "settings_wheel")
   internal static let trashCan = ImageAsset(name: "trash_can")

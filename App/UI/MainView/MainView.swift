@@ -123,7 +123,6 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
     MainView.styleBillTotalSectionTitleLabel(self.billTotalSectionTitleLabel)
     MainView.styleTipPercentageSectionTitleLabel(self.tipPercentageSectionTitleLabel)
     MainView.styleSharesSectionTitleLabel(self.sharesSectionTitleLabel)
-    MainView.styleIncreaseNumberOfSharesButton(self.increaseNumberOfSharesButton)
     MainView.styleSharePerPersonSectionBackground(self.sharePerPersonSectionBackground)
   }
 
@@ -240,11 +239,32 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
     guard let model = self.viewModel else { SKFatalError("Expecting a viewmodel.") }
 
     MainView.styleNumberOfSharesLabel(self.numberOfSharesLabel, shares: model.numberOfShares)
-    MainView.styleDecreaseNumberOfSharesButton(self.decreaseNumberOfSharesButton, isEnabled: model.isDecreaseNumberOfSharesButtonEnabled)
-    MainView.styleBillTotalTextField(self.billTotalTextField, currency: Currency.euro.symbol, shouldReset: model.shouldDeleteBillTotalTextFieldContent)
-    MainView.styleTipPercentageTextField(self.tipPercentageTextField, shouldReset: model.shouldDeleteTipPercentageTextFieldContent)
-    MainView.styleSharePerPersonTitleLabel(self.sharePerPersonTitleLabel, with: model.sharePerPersonTitleText)
-    MainView.styleSharePerPersonAmount(self.sharePerPersonAmount, amount: model.sharePerPerson, currency: model.currencySymbol)
+    MainView.styleIncreaseNumberOfSharesButton(
+      self.increaseNumberOfSharesButton,
+      isEnabled: model.increaseNumberOfSharesButtonEnabled
+    )
+    MainView.styleDecreaseNumberOfSharesButton(
+      self.decreaseNumberOfSharesButton,
+      isEnabled: model.isDecreaseNumberOfSharesButtonEnabled
+    )
+    MainView.styleBillTotalTextField(
+      self.billTotalTextField,
+      currency: Currency.euro.symbol,
+      shouldReset: model.shouldDeleteBillTotalTextFieldContent
+    )
+    MainView.styleTipPercentageTextField(
+      self.tipPercentageTextField,
+      shouldReset: model.shouldDeleteTipPercentageTextFieldContent
+    )
+    MainView.styleSharePerPersonTitleLabel(
+      self.sharePerPersonTitleLabel,
+      with: model.sharePerPersonTitleText
+    )
+    MainView.styleSharePerPersonAmount(
+      self.sharePerPersonAmount,
+      amount: model.sharePerPerson,
+      currency: model.currencySymbol
+    )
   }
 
   //MARK: - User Interaction
@@ -347,9 +367,11 @@ extension MainView {
     label.adjustsFontSizeToFitWidth = true
   }
 
-  private static func styleIncreaseNumberOfSharesButton(_ button: SKImageButton) {
+  private static func styleIncreaseNumberOfSharesButton(_ button: SKImageButton, isEnabled: Bool) {
     let normalImage = Asset.plusButtonEnabled.image
-    button.image = normalImage
+    let disabledImage = Asset.plusButtonDisabled.image
+    button.isEnabled = isEnabled
+    button.image = isEnabled ? normalImage : disabledImage
   }
 
   private static func styleSharePerPersonSectionBackground(_ view: UIView) {

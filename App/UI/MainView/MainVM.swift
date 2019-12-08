@@ -27,6 +27,14 @@ struct MainVM: BMViewModel {
   var isDecreaseNumberOfSharesButtonEnabled: Bool {
     return self.numberOfShares > 1
   }
+  
+  /// Whether or not the `increaseaNumberOfSharesButton` is enabled.
+  var increaseNumberOfSharesButtonEnabled: Bool {
+    guard let currentBillAmount = self.currentBillAmount, currentBillAmount > 0 else {
+      return false
+    }
+    return true
+  }
 
   /// Whether or not to delete the content of the textfield.
   /// Returns true when the `currentBillAmount` is `nil`.

@@ -4,10 +4,11 @@
 //  Copyright © 2019 TheInkedEngineer. All rights reserved.
 // 
 
-import UIKit
+import BloodyMary
 import SwiftKnife
+import UIKit
 
-class KeyboardView: UIView, SKView {
+class KeyboardView: UIView, BMView {
   
   // MARK: - Properties
   
@@ -144,7 +145,7 @@ extension KeyboardView: UICollectionViewDataSource {
         SKFatalError("Could not properly dequeue cell.")
     }
     
-    cell.model = KeypadCellVM(text: self.keys[safe: indexPath.row]?.visualValue, image: nil)
+    cell.viewModel = KeypadCellVM(text: self.keys[safe: indexPath.row]?.visualValue, image: nil)
     return cell
   }
 }

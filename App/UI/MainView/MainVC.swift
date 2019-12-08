@@ -4,13 +4,13 @@
 //  Copyright © 2019 TheInkedEngineer. All rights reserved.
 // 
 
+import BloodyMary
 import Foundation
 
+class MainVC: BMViewController<MainView> {
 
-class MainVC: SKViewController<MainView> {
-
-  override func setupInteraction() {
-    super.setupInteraction()
+  override func setupInteractions() {
+    super.setupInteractions()
 
     self.rootView.didTapResetButton = { [weak self] in
       self?.viewModel = MainVM(

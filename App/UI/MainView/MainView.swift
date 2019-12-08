@@ -4,11 +4,12 @@
 //  Copyright © 2019 TheInkedEngineer. All rights reserved.
 // 
 
+import BloodyMary
 import UIKit
-import SwiftKnife
 import SKWorldCurrencies
+import SwiftKnife
 
-class MainView: UIView, SKModelledView {
+class MainView: UIView, BMViewWithViewControllerAndViewModel {
 
   // MARK: - View Relative Info
 
@@ -40,40 +41,28 @@ class MainView: UIView, SKModelledView {
 
   /// The reset content icon.
   let resetButton = SKImageButton()
-
   /// The settings icon.
   let settingsButton = SKImageButton()
-
   /// The label for the bill total.
   let billTotalSectionTitleLabel = UILabel()
-
   /// The textField to insert the bill total.
   let billTotalTextField = CustomTextField(type: .money)
-
   /// The label for the bill total.
   let tipPercentageSectionTitleLabel = UILabel()
-
   /// The textField to insert the bill total.
   let tipPercentageTextField = CustomTextField(type: .tips)
-
   /// The label of the shares section.
   let sharesSectionTitleLabel = UILabel()
-
   /// The button to decrease the number of payers.
   let decreaseNumberOfSharesButton = SKImageButton()
-
   /// The label for the number of payers.
   let numberOfSharesLabel = UILabel()
-
   /// The button to increase the number of payers.
   let increaseNumberOfSharesButton = SKImageButton()
-
   /// The background of the share per person section.
   let sharePerPersonSectionBackground = UIView()
-
   /// The label to use for the sare per person section.
   let sharePerPersonTitleLabel = UILabel()
-
   /// The amount to pay per share.
   let sharePerPersonAmount = UILabel()
 
@@ -81,19 +70,14 @@ class MainView: UIView, SKModelledView {
 
   /// Resets the content of the page.
   var didTapResetButton: Interaction?
-
   /// Opens the settings button.
   var didTapSettingsButton: Interaction?
-
   /// The amount inside the `bill total` UITextField changed.
   var didUpdateBillTotal: ((Double?) -> Void)?
-
   /// The amount inside the `percentage` UITextField changed.
   var didUpdateTipPercentage: ((Double?) -> Void)?
-
   /// Decreases the amount of shares.
   var didTapDecreaseSharesButton: Interaction?
-
   /// Increases the amount of shares.
   var didTapIncreaseSharesButton: Interaction?
 
@@ -252,8 +236,8 @@ class MainView: UIView, SKModelledView {
     self.sharePerPersonAmount.sizeToFit()
   }
 
-  func update(oldModel: MainVM?) {
-    guard let model = self.model else { SKFatalError("Expecting a viewmodel.") }
+  func update(oldViewModel: MainVM?) {
+    guard let model = self.viewModel else { SKFatalError("Expecting a viewmodel.") }
 
     MainView.styleNumberOfSharesLabel(self.numberOfSharesLabel, shares: model.numberOfShares)
     MainView.styleDecreaseNumberOfSharesButton(self.decreaseNumberOfSharesButton, isEnabled: model.isDecreaseNumberOfSharesButtonEnabled)

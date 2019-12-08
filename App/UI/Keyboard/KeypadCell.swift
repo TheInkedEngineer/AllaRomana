@@ -4,10 +4,11 @@
 //  Copyright © 2019 TheInkedEngineer. All rights reserved.
 // 
 
-import UIKit
+import BloodyMary
 import SwiftKnife
+import UIKit
 
-class KeypadCellVM: SKViewModel {
+class KeypadCellVM: BMViewModel {
 
   // MARK: - Variables
 
@@ -36,7 +37,7 @@ class KeypadCellVM: SKViewModel {
   }
 }
 
-class KeypadCell: UICollectionViewCell, SKModelledView {
+class KeypadCell: UICollectionViewCell, BMViewWithViewModel {
 
   // MARK: - Properties
 
@@ -82,8 +83,8 @@ class KeypadCell: UICollectionViewCell, SKModelledView {
 
   func style() {}
 
-  func update(oldModel: KeypadCellVM?) {
-    guard let model = self.model else { SKFatalError("Expecting a viewmodel.") }
+  func update(oldViewModel: KeypadCellVM?) {
+    guard let model = self.viewModel else { SKFatalError("Expecting a viewmodel.") }
 
     KeypadCell.styleNumber(self.label, with: model.text, isVisible: model.shouldShowText)
     KeypadCell.styleImage(self.imageView, with: model.image, isVisible: model.shouldShowImage)

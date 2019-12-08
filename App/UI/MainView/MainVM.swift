@@ -4,9 +4,10 @@
 //  Copyright © 2019 TheInkedEngineer. All rights reserved.
 // 
 
+import BloodyMary
 import Foundation
 
-struct MainVM: SKViewModel {
+struct MainVM: BMViewModel {
   /// The current used currency.
   let currencySymbol: String = SettingsLogic.currency.symbol
 

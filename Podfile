@@ -5,9 +5,10 @@ inhibit_all_warnings!
 use_frameworks!
 
 def common_dependencies
-    pod 'SwiftKnife','3.1'
+    pod 'SwiftKnife','3.4'
     pod 'SwiftGen', '6.0'
     pod 'SKWorldCurrencies', '1.0'
+    pod 'BloodyMary', '1.0.1'
 end
 
 target 'AllaRomana' do

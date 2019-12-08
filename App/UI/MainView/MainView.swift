@@ -354,7 +354,8 @@ extension MainView {
   }
 
   private static func styleSharePerPersonAmount(_ label: UILabel, amount: Double, currency: String) {
-    label.attributedText = NSAttributedString(string: "\(amount) \(currency)", attributes: TextStyle.populatedFieldTextDarkBackground)
+    let roundedAmount = round(amount * 100) / 100
+    label.attributedText = NSAttributedString(string: "\(roundedAmount) \(currency)", attributes: TextStyle.populatedFieldTextDarkBackground)
     label.textAlignment = .center
     label.numberOfLines = 1
     label.minimumScaleFactor = 0.2

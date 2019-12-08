@@ -15,25 +15,16 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
 
   /// The desired right margin of the overall view.
   static let rightMargin: CGFloat = -20
-
   /// The desired left margin of the overall view.
   static let leftMargin: CGFloat = 20
-
   /// The distance present between two different sections.
   static var distanceBetweenSections: CGFloat {
     // case iphone SE
-    if UIScreen.portraitHeight <= 568 {
-      return 15
-    }
-
+    if UIScreen.portraitHeight <= 568 { return 15 }
     // case iPhone 6, 7, 8
-    if UIScreen.portraitHeight <= 667 {
-      return 25
-    }
-
+    if UIScreen.portraitHeight <= 667 { return 25 }
     return 30
   }
-
   /// The distance between a section title and its first child.
   static let distanceFromSectionTitle: CGFloat = 10
 
@@ -41,8 +32,6 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
 
   /// The reset content icon.
   let resetButton = SKImageButton()
-  /// The settings icon.
-  let settingsButton = SKImageButton()
   /// The label for the bill total.
   let billTotalSectionTitleLabel = UILabel()
   /// The textField to insert the bill total.
@@ -70,8 +59,6 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
 
   /// Resets the content of the page.
   var didTapResetButton: Interaction?
-  /// Opens the settings button.
-  var didTapSettingsButton: Interaction?
   /// The amount inside the `bill total` UITextField changed.
   var didUpdateBillTotal: ((Double?) -> Void)?
   /// The amount inside the `percentage` UITextField changed.
@@ -85,8 +72,6 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
   
   func configure() {
     self.addSubview(self.resetButton)
-    #warning("removed for first release.")
-//    self.addSubview(self.settingsButton)
     self.addSubview(self.billTotalSectionTitleLabel)
     self.addSubview(self.billTotalTextField)
     self.addSubview(self.tipPercentageSectionTitleLabel)
@@ -111,14 +96,12 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
     self.tipPercentageTextField.addTarget(self, action: #selector(self.updatedTipPercentage), for: .editingChanged)
 
     self.resetButton.addTarget(self, action: #selector(tappedResetButton), for: .touchUpInside)
-    self.settingsButton.addTarget(self, action: #selector(tappedSettingsButton), for: .touchUpInside)
     self.decreaseNumberOfSharesButton.addTarget(self, action: #selector(tappedDecreaseSharesButton), for: .touchUpInside)
     self.increaseNumberOfSharesButton.addTarget(self, action: #selector(tappedIncreaseSharesButton), for: .touchUpInside)
   }
 
   func style() {
     MainView.styleMainView(self)
-    MainView.styleSettingsIcon(self.settingsButton)
     MainView.styleResetIcon(self.resetButton)
     MainView.styleBillTotalSectionTitleLabel(self.billTotalSectionTitleLabel)
     MainView.styleTipPercentageSectionTitleLabel(self.tipPercentageSectionTitleLabel)
@@ -134,13 +117,6 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
     self.resetButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: MainView.rightMargin).isActive = true
     self.resetButton.widthAnchor.constraint(equalToConstant: Asset.trashCan.image.size.width).isActive = true
     self.resetButton.heightAnchor.constraint(equalToConstant: Asset.trashCan.image.size.height).isActive = true
-
-    #warning("removed for first release.")
-//    self.settingsButton.translatesAutoresizingMaskIntoConstraints = false
-//    self.settingsButton.centerYAnchor.constraint(equalTo: self.resetButton.centerYAnchor).isActive = true
-//    self.settingsButton.trailingAnchor.constraint(equalTo: self.resetButton.leadingAnchor, constant: -15).isActive = true
-//    self.settingsButton.widthAnchor.constraint(equalToConstant: Asset.settingsWheel.image.size.width).isActive = true
-//    self.settingsButton.heightAnchor.constraint(equalToConstant: Asset.settingsWheel.image.size.height).isActive = true
 
     self.billTotalSectionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
     self.billTotalSectionTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: MainView.leftMargin).isActive = true
@@ -272,11 +248,7 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
   @objc private func tappedResetButton() {
     self.didTapResetButton?()
   }
-
-  @objc private func tappedSettingsButton() {
-    self.didTapSettingsButton?()
-  }
-
+  
   @objc private func tappedDecreaseSharesButton() {
     self.didTapDecreaseSharesButton?()
   }
@@ -301,12 +273,6 @@ class MainView: UIView, BMViewWithViewControllerAndViewModel {
 extension MainView {
   private static func styleMainView(_ view: UIView) {
     view.backgroundColor = Palette.white
-  }
-
-  private static func styleSettingsIcon(_ button: SKImageButton) {
-    let image = Asset.settingsWheel.image.withRenderingMode(.alwaysTemplate)
-    button.image = image
-    button.tintColor = Palette.darkGrey
   }
 
   private static func styleResetIcon(_ button: SKImageButton) {

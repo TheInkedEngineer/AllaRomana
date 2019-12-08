@@ -4,12 +4,12 @@
 //  Copyright © 2019 TheInkedEngineer. All rights reserved.
 // 
 
+import SKWorldCurrencies
+
 extension CustomTextField: KeyboardDelegate {
 
   /// Properly formatted currency with spacing.
-  private var currency: String {
-    return " \(SettingsLogic.currency.symbol)"
-  }
+  private var currency: String { Currency.euro.symbol }
 
   func keyPressed(_ key: NumpadKey) {
 

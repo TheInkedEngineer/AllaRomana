@@ -22,12 +22,6 @@ class MainVC: BMViewController<MainView> {
       self?.rootView.billTotalTextField.becomeFirstResponder()
     }
 
-    self.rootView.didTapSettingsButton = { [weak self] in
-      guard let self = self else { return }
-      let settingsVM = SettingsVM()
-      SettingsLogic.show(from: self, with: settingsVM)
-    }
-
     self.rootView.didTapDecreaseSharesButton = { [weak self] in
       guard let model = self?.viewModel else { return }
 

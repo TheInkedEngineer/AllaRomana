@@ -23,7 +23,6 @@ internal enum Asset {
   internal static let minusButtonEnabled = ImageAsset(name: "minus_button_enabled")
   internal static let plusButtonDisabled = ImageAsset(name: "plus_button_disabled")
   internal static let plusButtonEnabled = ImageAsset(name: "plus_button_enabled")
-  internal static let settingsWheel = ImageAsset(name: "settings_wheel")
   internal static let trashCan = ImageAsset(name: "trash_can")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
